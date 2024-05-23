@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kerjain/screen/daftarPerusahaan.dart';
-import 'package:kerjain/screen/home.dart';
 import 'package:kerjain/screen/loginPerusahaan.dart';
-
 import 'package:kerjain/screen/onboard.dart';
+import 'package:kerjain/screen/splash.dart';
 
 class Onboard2 extends StatefulWidget {
   const Onboard2({super.key});
@@ -16,7 +15,7 @@ class _KerjaOnboard2 extends State<Onboard2> {
   // Login logic and form fields here
 
   void navigateToHomePage() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Home()));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const kerjaSplash()));
   }
 
   @override
@@ -130,7 +129,7 @@ class _KerjaOnboard2 extends State<Onboard2> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const LoginPerusahaan()),
+                                  builder: (context) => LoginScreenPerusahaan()),
                             );
                           },
                           child: const Text(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kerjain/screen/login.dart';
-import 'package:kerjain/screen/onboard.dart';
 
 class daftar extends StatelessWidget {
   const daftar({Key? Key});
@@ -206,7 +205,7 @@ class daftar extends StatelessWidget {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => const LoginScreen()),
+                                              builder: (context) => LoginScreen()),
                                         );
                                       },
                                       child: Container(
