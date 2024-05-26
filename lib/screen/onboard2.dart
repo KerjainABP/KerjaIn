@@ -15,14 +15,14 @@ class _KerjaOnboard2 extends State<Onboard2> {
   // Login logic and form fields here
 
   void navigateToHomePage() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const kerjaSplash()));
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const kerjaSplash()));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      ),
+      appBar: AppBar(),
       body: Container(
         child: SingleChildScrollView(
           child: Column(
@@ -32,20 +32,17 @@ class _KerjaOnboard2 extends State<Onboard2> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-
                     child: SizedBox(
                       width: 160,
                       child: ElevatedButton(
-
                           style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.grey),
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(Colors.grey),
                               shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
+                                      RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-
-                                  ))),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ))),
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -53,25 +50,33 @@ class _KerjaOnboard2 extends State<Onboard2> {
                                   builder: (context) => const Onboard()),
                             );
                           },
-                          child: const Text(
-                            "Pekerja",
-                            style: TextStyle(color: Colors.black,
-                                fontFamily: 'Poppins',
-                                fontSize: 18, fontWeight: FontWeight.w700),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: const Text(
+                              "Pekerja",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'Poppins',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700),
+                            ),
                           )),
                     ),
                   ),
-                  SizedBox(width: 40,),
+                  SizedBox(
+                    width: 40,
+                  ),
                   ElevatedButton(
                       style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Colors.white),
-                          shape: MaterialStateProperty.all<
-                              RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                  side: BorderSide(color: Color.fromRGBO(5, 26, 73, 1), width: 2),
-                              ))),
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: BorderSide(
+                                color: Color.fromRGBO(5, 26, 73, 1), width: 2),
+                          ))),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -79,18 +84,22 @@ class _KerjaOnboard2 extends State<Onboard2> {
                               builder: (context) => const Onboard2()),
                         );
                       },
-                      child: const Text(
-
-                        "Perusahaan",
-                        style: TextStyle(color: Colors.black,
-
-                            fontFamily: 'Poppins',
-                            fontSize: 18, fontWeight: FontWeight.w700),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: const Text(
+                          "Perusahaan",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: 'Poppins',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700),
+                        ),
                       )),
                 ],
-
               ),
-              SizedBox(height: 40,),
+              SizedBox(
+                height: 40,
+              ),
               Image.asset(
                 'assets/kerjain.png', // Replace with your image path
                 height: 200.0, // Adjust image height as needed
@@ -98,7 +107,8 @@ class _KerjaOnboard2 extends State<Onboard2> {
               ),
               Padding(
                 padding: const EdgeInsets.all(50.0),
-                child: Align( // Center the text horizontally within the padding
+                child: Align(
+                  // Center the text horizontally within the padding
                   alignment: Alignment.center,
                   child: Text(
                     'Temukan Bakat yang cocok dengan perusahaan Anda!',
@@ -110,7 +120,8 @@ class _KerjaOnboard2 extends State<Onboard2> {
                 ),
               ),
               Column(
-                mainAxisAlignment: MainAxisAlignment.center, // Center buttons horizontally
+                mainAxisAlignment:
+                    MainAxisAlignment.center, // Center buttons horizontally
                 children: [
                   Container(
                     child: SizedBox(
@@ -121,26 +132,32 @@ class _KerjaOnboard2 extends State<Onboard2> {
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   Color.fromRGBO(5, 26, 73, 1)),
                               shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
+                                      RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ))),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ))),
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LoginScreenPerusahaan()),
+                                  builder: (context) =>
+                                      LoginScreenPerusahaan()),
                             );
                           },
                           child: const Text(
                             "Masuk",
-                            style: TextStyle(color: Colors.white,
+                            style: TextStyle(
+                                color: Colors.white,
                                 fontFamily: 'Poppins',
-                                fontSize: 18, fontWeight: FontWeight.w500),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500),
                           )),
                     ),
                   ),
-                  const SizedBox(width: 20.0,height: 20,), // Add spacing between buttons
+                  const SizedBox(
+                    width: 20.0,
+                    height: 20,
+                  ), // Add spacing between buttons
                   Container(
                     child: SizedBox(
                       width: 280,
@@ -150,23 +167,28 @@ class _KerjaOnboard2 extends State<Onboard2> {
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   Colors.white),
                               shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
+                                      RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12.0),
-                                    side: BorderSide(color: Color.fromRGBO(5, 26, 73, 1), width: 2),
-                                  ))),
+                                borderRadius: BorderRadius.circular(12.0),
+                                side: BorderSide(
+                                    color: Color.fromRGBO(5, 26, 73, 1),
+                                    width: 2),
+                              ))),
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const DaftarPerusahaan()),
+                                  builder: (context) =>
+                                      const DaftarPerusahaan()),
                             );
                           },
                           child: const Text(
                             "Daftar",
-                            style: TextStyle(color: Colors.black,
+                            style: TextStyle(
+                                color: Colors.black,
                                 fontFamily: 'Poppins',
-                                fontSize: 18, fontWeight: FontWeight.w500),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500),
                           )),
                     ),
                   ),
@@ -176,7 +198,6 @@ class _KerjaOnboard2 extends State<Onboard2> {
           ),
         ),
       ),
-
     );
   }
 }

@@ -31,9 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-
-      ),
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 12),
@@ -52,10 +50,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),*/
                   Image.asset('assets/kerjain.png'),
                   Container(
-                    child: const Text(
-                        'Pekerja',
-                        style:
-                        TextStyle(fontSize: 16,fontFamily: 'Poppins',fontWeight: FontWeight.bold)),
+                    child: const Text('Pekerja',
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(
                     height: 17,
@@ -64,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: const Text(
                       "Halo, Selamat Datang",
                       style:
-                      TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
                     ),
                   ),
                   Container(
@@ -101,14 +100,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                         decoration: InputDecoration(
                                           hintText: "Username",
                                           hintStyle:
-                                          TextStyle(color: Colors.white),
+                                              TextStyle(color: Colors.white),
                                           border: UnderlineInputBorder(
                                             borderSide:
-                                            BorderSide(color: Colors.white),
+                                                BorderSide(color: Colors.white),
                                           ),
                                           focusedBorder: UnderlineInputBorder(
                                             borderSide:
-                                            BorderSide(color: Colors.white),
+                                                BorderSide(color: Colors.white),
                                           ),
                                           contentPadding: EdgeInsets.only(
                                               right: 40,
@@ -159,14 +158,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                       decoration: InputDecoration(
                                         hintText: "Password",
                                         hintStyle:
-                                        TextStyle(color: Colors.white),
+                                            TextStyle(color: Colors.white),
                                         border: UnderlineInputBorder(
                                           borderSide:
-                                          BorderSide(color: Colors.white),
+                                              BorderSide(color: Colors.white),
                                         ),
                                         focusedBorder: UnderlineInputBorder(
                                           borderSide:
-                                          BorderSide(color: Colors.white),
+                                              BorderSide(color: Colors.white),
                                         ),
                                         contentPadding: EdgeInsets.only(
                                             right: 40,
@@ -185,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         onPressed: () {
                                           setState(() {
                                             _isSecurePassword =
-                                            !_isSecurePassword;
+                                                !_isSecurePassword;
                                           });
                                         },
                                       ),
@@ -205,7 +204,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: ElevatedButton(
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color.fromRGBO(8, 157, 254, 1),
+                              const Color.fromRGBO(255, 255, 255, 1),
                             ),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(
@@ -222,14 +221,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             var data = {'email': email, 'password': password};
                             if (data != null) {
                               Navigator.push<void>(
-                              context,
-                              MaterialPageRoute<void>(
-                              builder: (BuildContext context) =>
-                              HomePekerja()),
-                            );
-
+                                context,
+                                MaterialPageRoute<void>(
+                                    builder: (BuildContext context) =>
+                                        HomePekerja()),
+                              );
                             }
-
 
                             //sini
                             // Menyambungkan ke API dengan header 'Content-Type'
@@ -261,7 +258,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               );
                               print(
                                   'Gagal terhubung ke API. Kode status: ${response.statusCode}');*/
-                              //sampe sini
+                            //sampe sini
 
                             //}
                           },
@@ -270,7 +267,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: const Text(
                               "Masuk",
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontSize: 18,
                               ),
                             ),
