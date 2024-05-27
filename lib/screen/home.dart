@@ -15,14 +15,17 @@ class _HomePekerjaState extends State<HomePekerja> {
     return DefaultTabController(
       length: 4, // Specify the number of tabs
       child: Scaffold(
-        appBar: AppBar(),
         body: TabBarView(
           children: [
             // Content of Tab 1
+
             SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(
+                    height: 24,
+                  ),
                   // Existing content of Tab 1
                   Container(
                     margin: EdgeInsets.only(left: 30),
@@ -108,9 +111,9 @@ class _HomePekerjaState extends State<HomePekerja> {
                     height: 30,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(left: 35),
                         child: const Text(
                           'Lowongan Baru',
                           style: TextStyle(
@@ -159,7 +162,7 @@ class _HomePekerjaState extends State<HomePekerja> {
                     ],
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    margin: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     child: GridView(
                       shrinkWrap: true,
                       physics:
@@ -231,13 +234,13 @@ class _HomePekerjaState extends State<HomePekerja> {
                 ),
                 color: Color.fromRGBO(
                     5, 26, 73, 1), // This will remove the indicator line
-                borderRadius: BorderRadius.all(Radius.circular(4))),
-            indicatorSize: TabBarIndicatorSize.tab,
+                borderRadius: BorderRadius.all(Radius.circular(8))),
             indicatorColor: Colors.white,
             labelColor: Colors.white,
             unselectedLabelColor: Colors.grey,
-            indicatorPadding:
-                EdgeInsets.symmetric(horizontal: 35, vertical: 10),
+            indicatorPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            indicatorWeight: 12,
+            indicatorSize: TabBarIndicatorSize.tab,
             tabs: [
               Tab(
                 icon: Icon(Icons.home),
