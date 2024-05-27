@@ -21,17 +21,18 @@ class _HomePekerjaState extends State<HomePekerja> {
 
             SingleChildScrollView(
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 24,
                   ),
                   // Existing content of Tab 1
                   Container(
-                    margin: EdgeInsets.only(left: 30),
+                    margin: const EdgeInsets.only(left: 30),
                     child: Column(
                       children: [
-                        Row(
+                        const Row(
                           children: [
                             CircleAvatar(
                               radius: 40,
@@ -41,13 +42,15 @@ class _HomePekerjaState extends State<HomePekerja> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  'Hellow kontol',
+                                Text(
+                                  'Hello Willy',
                                   style: TextStyle(
                                     fontSize: 24,
                                     fontWeight: FontWeight.w700,
                                     fontFamily: 'Poppins',
                                   ),
+                                  softWrap: true,
+                                  overflow: TextOverflow.visible,
                                 ),
                                 Text(
                                   'Pekerja', // Add your subtitle text here
@@ -59,19 +62,19 @@ class _HomePekerjaState extends State<HomePekerja> {
                                 ),
                               ],
                             ),
-                            const Text(
+                            Text(
                               'VIP10',
                             ),
                           ],
                         ),
                         Container(
-                          margin: EdgeInsets.only(left: 5),
-                          child: Row(
+                          margin: const EdgeInsets.only(left: 5),
+                          child: const Row(
                             children: [
-                              const SizedBox(
+                              SizedBox(
                                 height: 100,
                               ),
-                              const Text(
+                              Text(
                                 'Jelajahi Berbagai\nPeluang Kerja',
                                 style: TextStyle(
                                   fontSize: 24,
@@ -165,6 +168,7 @@ class _HomePekerjaState extends State<HomePekerja> {
                     margin: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     child: GridView(
                       shrinkWrap: true,
+
                       physics:
                           NeverScrollableScrollPhysics(), // Disable GridView's own scrolling
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -238,7 +242,7 @@ class _HomePekerjaState extends State<HomePekerja> {
             indicatorColor: Colors.white,
             labelColor: Colors.white,
             unselectedLabelColor: Colors.grey,
-            indicatorPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            indicatorPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             indicatorWeight: 12,
             indicatorSize: TabBarIndicatorSize.tab,
             tabs: [
