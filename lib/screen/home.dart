@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kerjain/Widget/kartu.dart';
+import 'package:kerjain/screen/DetailJob/DetailJobUser.dart';
 
 class HomePekerja extends StatefulWidget {
   const HomePekerja({Key? key}) : super(key: key);
@@ -145,7 +146,7 @@ class _HomePekerjaState extends State<HomePekerja> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const HomePekerja()),
+                                  builder: (context) =>  JobDetailScreen()),
                             );
                           },
                           child: Container(
