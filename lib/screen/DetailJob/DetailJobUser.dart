@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kerjain/screen/DetailJob/Deskripsi.dart';
 
 
 class JobDetailScreen extends StatelessWidget {
@@ -50,7 +51,7 @@ class JobDetailScreen extends StatelessWidget {
                         ElevatedButton(
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
+                            backgroundColor: Color.fromRGBO(217, 217, 217, 1),
                             foregroundColor: Colors.black,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
@@ -59,7 +60,13 @@ class JobDetailScreen extends StatelessWidget {
                           child: Text('      Detail      '),
                         ),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>  JobDeskripsiScreen()),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
                             foregroundColor: Colors.black,
