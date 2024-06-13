@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:kerjain/Widget/kartu.dart';
+import 'package:kerjain/Widget/kartuHome.dart';
 
 class HomePekerja extends StatefulWidget {
   const HomePekerja({Key? key}) : super(key: key);
@@ -15,210 +17,316 @@ class _HomePekerjaState extends State<HomePekerja> {
     return DefaultTabController(
       length: 4, // Specify the number of tabs
       child: Scaffold(
-        body: TabBarView(
-          children: [
-            // Content of Tab 1
-
-            SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  // Existing content of Tab 1
-                  Container(
-                    margin: const EdgeInsets.only(left: 30),
-                    child: Column(
-                      children: [
-                        const Row(
+        body: Builder(
+          builder: (BuildContext context) {
+            final TabController tabController = DefaultTabController.of(context);
+            return TabBarView(
+              children: [
+                // Content of Tab 1
+                SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      // Existing content of Tab 1
+                      Container(
+                        margin: const EdgeInsets.only(left: 20),
+                        child: Column(
                           children: [
-                            CircleAvatar(
-                              radius: 40,
-                              backgroundImage: AssetImage('assets/kerjain.png'),
+                            SizedBox(
+                              height: 20,
                             ),
-                            SizedBox(width: 30),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            const Row(
                               children: [
-                                Text(
-                                  'Hello Willy',
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: 'Poppins',
-                                  ),
-                                  softWrap: true,
-                                  overflow: TextOverflow.visible,
+                                CircleAvatar(
+                                  radius: 40,
+                                  backgroundImage: AssetImage('assets/kerjain.png'),
+                                ),
+                                SizedBox(width: 30),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Hello Willy',
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Poppins',
+                                      ),
+                                      softWrap: true,
+                                      overflow: TextOverflow.visible,
+                                    ),
+                                    Text(
+                                      'Pekerja', // Add your subtitle text here
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey,
+                                        fontFamily: 'Poppins',
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 Text(
-                                  'Pekerja', // Add your subtitle text here
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey,
-                                    fontFamily: 'Poppins',
-                                  ),
+                                  'VIP10',
                                 ),
                               ],
                             ),
-                            Text(
-                              'VIP10',
+                            Container(
+                              margin: const EdgeInsets.only(left: 10),
+                              child: const Row(
+                                children: [
+                                  SizedBox(
+                                    height: 100,
+                                  ),
+                                  Text(
+                                    'Jelajahi Berbagai\nPeluang Kerja',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontFamily: 'Popins',
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 5),
-                          child: const Row(
-                            children: [
-                              SizedBox(
-                                height: 100,
-                              ),
-                              Text(
-                                'Jelajahi Berbagai\nPeluang Kerja',
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontFamily: 'Popins',
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 15),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            suffixIcon: InkWell(
+                              onTap: () {
+                                tabController.animateTo(1);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Color.fromRGBO(5, 26, 73, 1), // Change the background color here
+                                ),
+                                child: Icon(
+                                  Icons.search,
+                                  color: Colors.white, // Set the icon color to white
                                 ),
                               ),
+                            ),
+                            hintText: 'Search...',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Container(
+                              child: const Text(
+                                'Lowongan Baru',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Container(
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const HomePekerja()),
+                                  );
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  child: Text(
+                                    "Lihat Semua",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Poppins',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 15, right: 15),
+                        child: GridView(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(), // Disable GridView's own scrolling
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 8,
+                            mainAxisSpacing: 8,
+                          ),
+                          children: [
+                            KartuHome(pekerjaan: 'BackEnd', onPressed: () {}),
+                            KartuHome(pekerjaan: 'FrontEnd', onPressed: () {}),
+                            KartuHome(pekerjaan: 'BackEnd', onPressed: () {}),
+                            KartuHome(pekerjaan: 'FrontEnd', onPressed: () {}),
+                            // Add more Kartu widgets as needed
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // Content of Tab 2
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 64, bottom: 10),
+                        child: Container(
+                          child: Text('Search',style: TextStyle(
+                            fontSize: 28,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w700,
+                          ),),
+                        ),
+                      ),
+                      Container(
+                        color: Color.fromRGBO(217,217,217,1),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 25),
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  suffixIcon: Container(
+                                    padding: EdgeInsets.all(20), // Set padding to zero
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Color.fromRGBO(5, 26, 73, 1), // Change the background color here
+                                    ),
+                                    child: Icon(Icons.search,
+                                        color: Colors.white), // Set the icon color to white
+                                  ),
+                                  hintText: 'Search...',
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 2, left: 30),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 170),
+                              child: Text(
+                                'Hasil Pencarian',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'Poppins',
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                              width: MediaQuery.of(context).size.width * 0.9, // Set the width to 80% of the screen width
+                              child: GridView(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(), // Disable GridView's own scrolling
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 1, // Number of columns
+                                  crossAxisSpacing: 12, // Horizontal spacing between columns
+                                  mainAxisSpacing: 12, // Vertical spacing between rows
+                                  childAspectRatio: 2,
+                                ),
+                                children: [
+                                  Kartu(pekerjaan: 'BackEnd', onPressed: () {}),
+                                  Kartu(pekerjaan: 'FrontEnd', onPressed: () {}),
+                                  Kartu(pekerjaan: 'BackEnd', onPressed: () {}),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // Content of Tab 3
+                Container(
+                  color: Colors.black,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 60,
+                        ),
+                        Text(
+                          'Lamaranku',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Container(
+                          color: Colors.blueGrey, // Set your desired background color here
+                          width: double.infinity, // Ensure the container takes the full width
+                          padding: EdgeInsets.all(16), // Add padding if necessary
+                          child: Column(
+                            children: [
+                              // Add your content under 'Lamaranku' text here
+                              // Example content
+                              Text(
+                                'Your additional content goes here...',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              // Add more widgets as needed
                             ],
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 35, vertical: 15),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        suffixIcon: Container(
-                          padding: EdgeInsets.all(20), // Set padding to zero
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Color.fromRGBO(5, 26, 73,
-                                1), // Change the background color here
-                          ),
-                          child: Icon(Icons.search,
-                              color:
-                                  Colors.white), // Set the icon color to white
-                        ),
-                        hintText: 'Search...',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        child: const Text(
-                          'Lowongan Baru',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 40,
-                      ),
-                      Container(
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const HomePekerja()),
-                            );
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                              "Lihat Semua",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: 'Poppins',
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    child: GridView(
-                      shrinkWrap: true,
-
-                      physics:
-                          NeverScrollableScrollPhysics(), // Disable GridView's own scrolling
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, // Number of columns
-                        crossAxisSpacing:
-                            12, // Horizontal spacing between columns
-                        mainAxisSpacing: 12, // Vertical spacing between rows
-                      ),
-                      children: [
-                        Kartu(pekerjaan: 'BackEnd', onPressed: () {}),
-                        Kartu(pekerjaan: 'FrontEnd', onPressed: () {}),
-                        Kartu(pekerjaan: 'BackEnd', onPressed: () {}),
-                        Kartu(pekerjaan: 'FrontEnd', onPressed: () {}),
-                        Kartu(pekerjaan: 'BackEnd', onPressed: () {}),
-                        Kartu(pekerjaan: 'FrontEnd', onPressed: () {}),
-                        // Add more Kartu widgets as needed
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // Content of Tab 2
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  GridView(
-                    shrinkWrap: true,
-                    physics:
-                        NeverScrollableScrollPhysics(), // Disable GridView's own scrolling
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                    ),
-                    children: [
-                      Kartu(pekerjaan: 'BackEnd', onPressed: () {}),
-                      Kartu(pekerjaan: 'BackEnd', onPressed: () {}),
-                      Kartu(pekerjaan: 'BackEnd', onPressed: () {}),
-                      Kartu(pekerjaan: 'BackEnd', onPressed: () {}),
-                      Kartu(pekerjaan: 'BackEnd', onPressed: () {}),
-                      Kartu(pekerjaan: 'BackEnd', onPressed: () {}),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            // Content of Tab 3
-            Center(child: Text('Bookmark Content')),
-            // Content of Tab 4
-            Center(child: Text('Profile Content')),
-          ],
+                ),
+                // Content of Tab 4
+                Center(child: Text('Profile Content')),
+              ],
+            );
+          },
         ),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
@@ -251,13 +359,8 @@ class _HomePekerjaState extends State<HomePekerja> {
                 text: "Home",
               ), // Icon for Tab 1
               Tab(icon: Icon(Icons.search), text: "Search"), // Icon for Tab 2
-              Tab(
-                  icon: Icon(Icons.bookmark),
-                  text: "Lamaran"), // Icon for Tab 3
-              Tab(
-                icon: Icon(Icons.person),
-                text: "Profile",
-              ), // Icon for Tab 4
+              Tab(icon: Icon(Icons.bookmark), text: "Lamaran"), // Icon for Tab 3
+              Tab(icon: Icon(Icons.person), text: "Profile"), // Icon for Tab 4
             ],
           ),
         ),
@@ -267,6 +370,6 @@ class _HomePekerjaState extends State<HomePekerja> {
 }
 
 void main() => runApp(MaterialApp(
-      home: HomePekerja(),
-      debugShowCheckedModeBanner: false,
-    ));
+  home: HomePekerja(),
+  debugShowCheckedModeBanner: false,
+));
