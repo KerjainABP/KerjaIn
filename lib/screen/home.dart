@@ -347,7 +347,7 @@ class _HomePekerjaState extends State<HomePekerja> {
                             );
                           },
                           icon: Icon(Icons.logout_outlined),
-                          label: Text('Logout'), // You can change the text or leave it as an empty string if you don't want text
+                          label: Text('Logout'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color.fromRGBO(5, 26, 73, 1), // Button background color
                             foregroundColor: Colors.white, // Icon and text color
