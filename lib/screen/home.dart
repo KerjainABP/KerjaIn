@@ -1,7 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:kerjain/Widget/kartu.dart';
-import 'package:kerjain/screen/DetailJob/DetailJobUser.dart';
+import 'package:kerjain/models/user.dart';
+import 'package:kerjain/services/user_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePekerja extends StatefulWidget {
   const HomePekerja({Key? key}) : super(key: key);
@@ -11,6 +14,33 @@ class HomePekerja extends StatefulWidget {
 }
 
 class _HomePekerjaState extends State<HomePekerja> {
+  late String idUser;
+
+  // Buat instance dari UserService
+  final UserService _userService = UserService();
+  User user = User();
+
+  @override
+  void initState() {
+    super.initState();
+    getIdUser().then((value) {
+      setState(() {
+        idUser = value!;
+        // Panggil API setelah mendapatkan idUser
+        User.connectAPI(idUser).then((value) {
+          setState(() {
+            user = value;
+          });
+        });
+      });
+    });
+  }
+
+  Future<String?> getIdUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('idUser');
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -19,7 +49,6 @@ class _HomePekerjaState extends State<HomePekerja> {
         body: TabBarView(
           children: [
             // Content of Tab 1
-
             SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -33,19 +62,14 @@ class _HomePekerjaState extends State<HomePekerja> {
                     margin: const EdgeInsets.only(left: 30),
                     child: Column(
                       children: [
-                        const Row(
+                        Row(
                           children: [
-                            CircleAvatar(
-                              radius: 40,
-                              backgroundImage: AssetImage('assets/kerjain.png'),
-                            ),
-                            SizedBox(width: 30),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Hello Willy',
-                                  style: TextStyle(
+                                  user.nama ?? "",
+                                  style: const TextStyle(
                                     fontSize: 24,
                                     fontWeight: FontWeight.w700,
                                     fontFamily: 'Poppins',
@@ -53,7 +77,7 @@ class _HomePekerjaState extends State<HomePekerja> {
                                   softWrap: true,
                                   overflow: TextOverflow.visible,
                                 ),
-                                Text(
+                                const Text(
                                   'Pekerja', // Add your subtitle text here
                                   style: TextStyle(
                                     fontSize: 16,
@@ -62,9 +86,6 @@ class _HomePekerjaState extends State<HomePekerja> {
                                   ),
                                 ),
                               ],
-                            ),
-                            Text(
-                              'VIP10',
                             ),
                           ],
                         ),
@@ -79,7 +100,7 @@ class _HomePekerjaState extends State<HomePekerja> {
                                 'Jelajahi Berbagai\nPeluang Kerja',
                                 style: TextStyle(
                                   fontSize: 24,
-                                  fontFamily: 'Popins',
+                                  fontFamily: 'Poppins',
                                 ),
                               ),
                             ],
@@ -143,11 +164,7 @@ class _HomePekerjaState extends State<HomePekerja> {
                             ),
                           ),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>  JobDetailScreen()),
-                            );
+                            // Navigasi ke halaman yang sesuai
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric(vertical: 10),
@@ -169,7 +186,6 @@ class _HomePekerjaState extends State<HomePekerja> {
                     margin: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     child: GridView(
                       shrinkWrap: true,
-
                       physics:
                           NeverScrollableScrollPhysics(), // Disable GridView's own scrolling
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -195,24 +211,7 @@ class _HomePekerjaState extends State<HomePekerja> {
             // Content of Tab 2
             SingleChildScrollView(
               child: Column(
-                children: [
-                  GridView(
-                    shrinkWrap: true,
-                    physics:
-                        NeverScrollableScrollPhysics(), // Disable GridView's own scrolling
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                    ),
-                    children: [
-                      Kartu(pekerjaan: 'BackEnd', onPressed: () {}),
-                      Kartu(pekerjaan: 'BackEnd', onPressed: () {}),
-                      Kartu(pekerjaan: 'BackEnd', onPressed: () {}),
-                      Kartu(pekerjaan: 'BackEnd', onPressed: () {}),
-                      Kartu(pekerjaan: 'BackEnd', onPressed: () {}),
-                      Kartu(pekerjaan: 'BackEnd', onPressed: () {}),
-                    ],
-                  ),
-                ],
+                children: [],
               ),
             ),
             // Content of Tab 3

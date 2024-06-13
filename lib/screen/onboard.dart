@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kerjain/screen/daftar.dart';
-import 'package:kerjain/screen/login.dart';
+import 'package:kerjain/screen/Auth/Daftar/daftar.dart';
+import 'package:kerjain/screen/Auth/Login/login.dart';
 import 'package:kerjain/screen/onboard2.dart';
 import 'package:kerjain/screen/splash.dart';
 
@@ -180,7 +180,7 @@ class _KerjaOnboard extends State<Onboard> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const daftar()),
+                                  builder: (context) => const Daftar()),
                             );
                           },
                           child: const Text(

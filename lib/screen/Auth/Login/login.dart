@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kerjain/Widget/ButtonIcons.dart';
 import 'package:http/http.dart' as http;
+import 'package:kerjain/screen/Auth/Daftar/daftar.dart';
 import 'dart:convert';
 
 import 'package:kerjain/screen/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /*
 import 'package:kerjain/Widgets/NavigationMenu.dart';
@@ -224,20 +226,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
                             // Menyiapkan data yang akan dikirimkan ke API
                             var data = {'email': email, 'password': password};
-                            if (data != null) {
-                              Navigator.push<void>(
-                                context,
-                                MaterialPageRoute<void>(
-                                    builder: (BuildContext context) =>
-                                        HomePekerja()),
-                              );
-                            }
-
-                            //sini
-                            // Menyambungkan ke API dengan header 'Content-Type'
-                            /*var response = await http.post(
-                            Uri.parse(
-                                   'https://kerjainbe-production.up.railway.app/api/loginuser'),
+                            var response = await http.post(
+                              Uri.parse('http://127.0.0.1:8000/api/loginuser'),
                               headers: {
                                 'Content-Type':
                                     'application/json', // Menambahkan header 'Content-Type'
@@ -248,6 +238,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             // Memeriksa respon dari API
                             if (response.statusCode == 200) {
                               print('Respon dari API: ${response.body}');
+                              // Parsing respons JSON untuk mendapatkan idUser
+                              var responseData = jsonDecode(response.body);
+                              var receivedIdUser = responseData['id'];
+
+                              // Menyimpan idUser ke dalam SharedPreferences
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              await prefs.setString('idUser', receivedIdUser);
                               Navigator.push<void>(
                                 context,
                                 MaterialPageRoute<void>(
@@ -262,10 +260,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               );
                               print(
-                                  'Gagal terhubung ke API. Kode status: ${response.statusCode}');*/
-                            //sampe sini
-
-                            //}
+                                  'Gagal terhubung ke API. Kode status: ${response.statusCode}');
+                              //sampe sini
+                            }
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 10),
@@ -281,7 +278,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) => Daftar()));
+                      },
                       child: const Center(
                         child: Text(
                           "Buat Akun Baru",

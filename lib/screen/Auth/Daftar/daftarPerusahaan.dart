@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kerjain/screen/login.dart';
+import 'package:kerjain/screen/Auth/Login/login.dart';
 import 'package:kerjain/screen/onboard2.dart';
 
 class DaftarPerusahaan extends StatelessWidget {
@@ -25,7 +25,6 @@ class DaftarPerusahaan extends StatelessWidget {
                     const SizedBox(
                       height: 17,
                     ),
-
                     Container(
                       child: const Text(
                         "Buat Akun Perusahaan Anda",
@@ -45,11 +44,12 @@ class DaftarPerusahaan extends StatelessWidget {
                     ),
                     Container(
                       decoration: BoxDecoration(
-
                         color: Color.fromRGBO(5, 26, 73, 1),
-                        borderRadius: BorderRadius.circular(20.0), // Set the border radius
+                        borderRadius: BorderRadius.circular(
+                            20.0), // Set the border radius
                       ),
-                      padding: const EdgeInsets.only(left: 25,right: 25,top: 44),
+                      padding:
+                          const EdgeInsets.only(left: 25, right: 25, top: 44),
                       child: Column(
                         children: [
                           Container(
@@ -71,7 +71,8 @@ class DaftarPerusahaan extends StatelessWidget {
                                       ),
                                       decoration: InputDecoration(
                                         hintText: 'Nama Perusahaan',
-                                        hintStyle: TextStyle(color: Colors.white),
+                                        hintStyle:
+                                            TextStyle(color: Colors.white),
                                         border: InputBorder.none,
                                         contentPadding: EdgeInsets.all(10),
                                       ),
@@ -100,7 +101,8 @@ class DaftarPerusahaan extends StatelessWidget {
                                       ),
                                       decoration: InputDecoration(
                                         hintText: 'Email',
-                                        hintStyle: TextStyle(color: Colors.white),
+                                        hintStyle:
+                                            TextStyle(color: Colors.white),
                                         border: InputBorder.none,
                                         contentPadding: EdgeInsets.all(10),
                                       ),
@@ -122,7 +124,8 @@ class DaftarPerusahaan extends StatelessWidget {
                                       obscureText: true,
                                       decoration: InputDecoration(
                                         hintText: 'Password',
-                                        hintStyle: TextStyle(color: Colors.white),
+                                        hintStyle:
+                                            TextStyle(color: Colors.white),
                                         border: InputBorder.none,
                                         contentPadding: EdgeInsets.all(10),
                                       ),
@@ -144,7 +147,8 @@ class DaftarPerusahaan extends StatelessWidget {
                                       obscureText: true,
                                       decoration: InputDecoration(
                                         hintText: 'Confirm Password',
-                                        hintStyle: TextStyle(color: Colors.white),
+                                        hintStyle:
+                                            TextStyle(color: Colors.white),
                                         border: InputBorder.none,
                                         contentPadding: EdgeInsets.all(10),
                                       ),
@@ -166,7 +170,8 @@ class DaftarPerusahaan extends StatelessWidget {
                                       obscureText: true,
                                       decoration: InputDecoration(
                                         hintText: 'Tahun Berdiri',
-                                        hintStyle: TextStyle(color: Colors.white),
+                                        hintStyle:
+                                            TextStyle(color: Colors.white),
                                         border: InputBorder.none,
                                         contentPadding: EdgeInsets.all(10),
                                       ),
@@ -174,11 +179,8 @@ class DaftarPerusahaan extends StatelessWidget {
                                   ),
                                 ),
                               ],
-
                             ),
-
                           ),
-
                           Container(
                             margin: const EdgeInsets.only(bottom: 30),
                             child: Column(
@@ -193,12 +195,14 @@ class DaftarPerusahaan extends StatelessWidget {
                                     width: double.infinity,
                                     child: ElevatedButton(
                                       style: ButtonStyle(
-                                        backgroundColor: MaterialStateProperty.all<Color>(
-                                            Colors.white),
-                                        shape:
-                                        MaterialStateProperty.all<RoundedRectangleBorder>(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Colors.white),
+                                        shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
                                           RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10.0),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
                                           ),
                                         ),
                                       ),
@@ -206,16 +210,19 @@ class DaftarPerusahaan extends StatelessWidget {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => LoginScreen()),
+                                              builder: (context) =>
+                                                  LoginScreen()),
                                         );
                                       },
                                       child: Container(
-                                        padding: EdgeInsets.symmetric(vertical: 10),
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 10),
                                         child: Text(
                                           "Daftar",
                                           style: TextStyle(
                                             color: Colors.black,
-                                            fontSize: 18, fontWeight: FontWeight.w700,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w700,
                                             fontFamily: 'Poppins',
                                           ),
                                         ),
@@ -245,7 +252,6 @@ class DaftarPerusahaan extends StatelessWidget {
                       ),
                     ),
                   ],
-
                 )
               ],
             ),
@@ -254,6 +260,4 @@ class DaftarPerusahaan extends StatelessWidget {
       ),
     );
   }
-
 }
-
