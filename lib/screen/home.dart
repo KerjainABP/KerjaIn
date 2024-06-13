@@ -9,6 +9,7 @@ import 'package:kerjain/services/lowongan_service.dart';
 import 'package:kerjain/services/user_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:kerjain/Widget/kartuHome.dart';
+import 'package:kerjain/screen/splash.dart';
 
 class HomePekerja extends StatefulWidget {
   const HomePekerja({Key? key}) : super(key: key);
