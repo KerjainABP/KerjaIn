@@ -3,8 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:kerjain/models/lowongan.dart';
 
 class LowonganService {
-  static const String baseUrl =
-      "https://kerjainbe-production.up.railway.app/api/user/lowongan";
+  static const String baseUrl = "http://127.0.0.1:8000/api/user/lowongan";
 
   static Future<List<Lowongan>> fetchLowongan() async {
     try {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kerjain/screen/daftarPerusahaan.dart';
-import 'package:kerjain/screen/loginPerusahaan.dart';
+import 'package:kerjain/screen/Auth/Daftar/daftarPerusahaan.dart';
+import 'package:kerjain/screen/Auth/Login/loginPerusahaan.dart';
 import 'package:kerjain/screen/onboard.dart';
 import 'package:kerjain/screen/splash.dart';
 

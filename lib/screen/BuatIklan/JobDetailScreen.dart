@@ -27,7 +27,8 @@ class JobDetailScreen extends StatelessWidget {
           backgroundColor: Colors.black, // Warna latar belakang lingkaran
           radius: 10, // Ukuran radius lingkaran
           child: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white), // Ikon panah dengan warna putih
+            icon: Icon(Icons.arrow_back,
+                color: Colors.white), // Ikon panah dengan warna putih
             onPressed: () {
               Navigator.pop(context);
             },
@@ -111,17 +112,17 @@ class JobDetailScreen extends StatelessWidget {
                     SizedBox(height: 10),
                     Text(
                       'PT Tokopedia merupakan perusahaan teknologi Indonesia '
-                          'dengan misi pemerataan ekonomi secara digital di Indonesia. '
-                          'Visi perusahaan adalah untuk menciptakan ekosistem di mana '
-                          'siapa pun bisa memulai dan menemukan apa pun. Hingga saat ini, '
-                          'Tokopedia termasuk marketplace yang paling banyak dikunjungi '
-                          'oleh masyarakat Indonesia.\n\n'
-                          'Tokopedia turut mendukung para pelaku Usaha Mikro Kecil dan '
-                          'Menengah (UMKM) dan perorangan untuk mengembangkan usaha mereka '
-                          'dengan memasarkan produk secara daring dengan Pemerintah dan '
-                          'pihak-pihak lainnya. Salah satu program kolaborasi yang diinisiasi '
-                          'oleh Tokopedia adalah acara tahunan MAKERFEST yang diadakan sejak '
-                          'bulan Maret 2018.',
+                      'dengan misi pemerataan ekonomi secara digital di Indonesia. '
+                      'Visi perusahaan adalah untuk menciptakan ekosistem di mana '
+                      'siapa pun bisa memulai dan menemukan apa pun. Hingga saat ini, '
+                      'Tokopedia termasuk marketplace yang paling banyak dikunjungi '
+                      'oleh masyarakat Indonesia.\n\n'
+                      'Tokopedia turut mendukung para pelaku Usaha Mikro Kecil dan '
+                      'Menengah (UMKM) dan perorangan untuk mengembangkan usaha mereka '
+                      'dengan memasarkan produk secara daring dengan Pemerintah dan '
+                      'pihak-pihak lainnya. Salah satu program kolaborasi yang diinisiasi '
+                      'oleh Tokopedia adalah acara tahunan MAKERFEST yang diadakan sejak '
+                      'bulan Maret 2018.',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.white,
@@ -132,9 +133,10 @@ class JobDetailScreen extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:  Color(0xFF2949F1),
+                        backgroundColor: Color(0xFF2949F1),
                         foregroundColor: Colors.white,
-                        padding: EdgeInsets.symmetric(horizontal: 140, vertical: 10),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 140, vertical: 10),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
