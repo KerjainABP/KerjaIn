@@ -3,10 +3,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:kerjain/Widget/ButtonIcons.dart';
 import 'package:http/http.dart' as http;
+import 'package:kerjain/screen/Auth/Daftar/daftarPerusahaan.dart';
 import 'dart:convert';
 
 import 'package:kerjain/screen/home.dart';
 import 'package:kerjain/screen/homepage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /*
 import 'package:kerjain/Widgets/NavigationMenu.dart';
@@ -34,9 +36,7 @@ class _LoginScreenState extends State<LoginScreenPerusahaan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-
-      ),
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 12),
@@ -52,27 +52,27 @@ class _LoginScreenState extends State<LoginScreenPerusahaan> {
                   ),
                   Image.asset('assets/kerjain.png'),
                   Container(
-                    child: const Text(
-                        'Perusahaan',
-                    style:
-                    TextStyle(fontSize: 16,fontFamily: 'Poppins',fontWeight: FontWeight.bold)),
+                    child: const Text('Perusahaan',
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(
                     height: 17,
                   ),
-
                   Container(
                     child: const Text(
                       "Halo, Selamat Datang",
                       style:
-                      TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.only(bottom: 32),
                     width: 212,
-                    child: Text(
-                        "Temukan Beragam Individu dari berbagai bidang."),
+                    child:
+                        Text("Temukan Beragam Individu dari berbagai bidang."),
                   )
                 ],
               ),
@@ -102,14 +102,14 @@ class _LoginScreenState extends State<LoginScreenPerusahaan> {
                                         decoration: InputDecoration(
                                           hintText: "Username",
                                           hintStyle:
-                                          TextStyle(color: Colors.white),
+                                              TextStyle(color: Colors.white),
                                           border: UnderlineInputBorder(
                                             borderSide:
-                                            BorderSide(color: Colors.white),
+                                                BorderSide(color: Colors.white),
                                           ),
                                           focusedBorder: UnderlineInputBorder(
                                             borderSide:
-                                            BorderSide(color: Colors.white),
+                                                BorderSide(color: Colors.white),
                                           ),
                                           contentPadding: EdgeInsets.only(
                                               right: 40,
@@ -160,14 +160,14 @@ class _LoginScreenState extends State<LoginScreenPerusahaan> {
                                       decoration: InputDecoration(
                                         hintText: "Password",
                                         hintStyle:
-                                        TextStyle(color: Colors.white),
+                                            TextStyle(color: Colors.white),
                                         border: UnderlineInputBorder(
                                           borderSide:
-                                          BorderSide(color: Colors.white),
+                                              BorderSide(color: Colors.white),
                                         ),
                                         focusedBorder: UnderlineInputBorder(
                                           borderSide:
-                                          BorderSide(color: Colors.white),
+                                              BorderSide(color: Colors.white),
                                         ),
                                         contentPadding: EdgeInsets.only(
                                             right: 40,
@@ -186,7 +186,7 @@ class _LoginScreenState extends State<LoginScreenPerusahaan> {
                                         onPressed: () {
                                           setState(() {
                                             _isSecurePassword =
-                                            !_isSecurePassword;
+                                                !_isSecurePassword;
                                           });
                                         },
                                       ),
@@ -221,22 +221,21 @@ class _LoginScreenState extends State<LoginScreenPerusahaan> {
 
                             // Menyiapkan data yang akan dikirimkan ke API
                             var data = {'email': email, 'password': password};
-                            if (data != null) {
-                              Navigator.push<void>(
-                                context,
-                                MaterialPageRoute<void>(
-                                    builder: (BuildContext context) =>
-                                        HomePerusahaan()),
-                              );
+                            // if (data != null) {
+                            //   Navigator.push<void>(
+                            //     context,
+                            //     MaterialPageRoute<void>(
+                            //         builder: (BuildContext context) =>
+                            //             HomePerusahaan()),
+                            //   );
 
-                            }
-
+                            // }
 
                             //sini
                             // Menyambungkan ke API dengan header 'Content-Type'
-                            /*var response = await http.post(
-                            Uri.parse(
-                                   'https://kerjainbe-production.up.railway.app/api/loginuser'),
+                            var response = await http.post(
+                              Uri.parse(
+                                  'http://127.0.0.1:8000/api/loginperusahaan'),
                               headers: {
                                 'Content-Type':
                                     'application/json', // Menambahkan header 'Content-Type'
@@ -247,11 +246,19 @@ class _LoginScreenState extends State<LoginScreenPerusahaan> {
                             // Memeriksa respon dari API
                             if (response.statusCode == 200) {
                               print('Respon dari API: ${response.body}');
+                              var responseData = jsonDecode(response.body);
+                              var receivedIdUser = responseData['id'];
+
+                              // Menyimpan idUser ke dalam SharedPreferences
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              await prefs.setString(
+                                  'idPerusahaan', receivedIdUser);
                               Navigator.push<void>(
                                 context,
                                 MaterialPageRoute<void>(
                                   builder: (BuildContext context) =>
-                                      HomePekerja(),
+                                      HomePerusahaan(),
                                 ),
                               );
                             } else {
@@ -261,10 +268,8 @@ class _LoginScreenState extends State<LoginScreenPerusahaan> {
                                 ),
                               );
                               print(
-                                  'Gagal terhubung ke API. Kode status: ${response.statusCode}');*/
-                            //sampe sini
-
-                            //}
+                                  'Gagal terhubung ke API. Kode status: ${response.statusCode}');
+                            }
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 10),
@@ -280,7 +285,12 @@ class _LoginScreenState extends State<LoginScreenPerusahaan> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DaftarPerusahaan()));
+                      },
                       child: const Center(
                         child: Text(
                           "Buat Akun Baru",

@@ -1,9 +1,60 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:kerjain/screen/Auth/Login/login.dart';
 import 'package:kerjain/screen/onboard2.dart';
 
-class DaftarPerusahaan extends StatelessWidget {
-  const DaftarPerusahaan({Key? Key});
+class DaftarPerusahaan extends StatefulWidget {
+  const DaftarPerusahaan({Key? key}) : super(key: key);
+
+  @override
+  _DaftarPerusahaanState createState() => _DaftarPerusahaanState();
+}
+
+class _DaftarPerusahaanState extends State<DaftarPerusahaan> {
+  TextEditingController _namaPerusahaanController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
+  TextEditingController _tahunBerdiriController = TextEditingController();
+
+  void dispose() {
+    _namaPerusahaanController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    _tahunBerdiriController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _registerCompany(BuildContext context) async {
+    String url =
+        'http://127.0.0.1:8000/api/registerperusahaan'; // Ganti dengan URL endpoint API register perusahaan Anda
+    var body = {
+      'nama': _namaPerusahaanController.text,
+      'email': _emailController.text,
+      'password': _passwordController.text,
+      'tahun_berdiri': _tahunBerdiriController.text,
+      'tipe': "swasta"
+    };
+
+    // Kirim request ke API
+    var response = await http.post(Uri.parse(url),
+        body: jsonEncode(body), headers: {'Content-Type': 'application/json'});
+
+    if (response.statusCode == 201) {
+      // Berhasil mendaftar, mungkin tambahkan logika navigasi ke halaman selanjutnya
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+      );
+    } else {
+      // Gagal mendaftar, mungkin tampilkan pesan kesalahan
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Gagal mendaftar. Silakan coba lagi.'),
+      ));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +117,7 @@ class DaftarPerusahaan extends StatelessWidget {
                                       ),
                                     ),
                                     child: TextField(
+                                      controller: _namaPerusahaanController,
                                       style: TextStyle(
                                         color: Colors.white,
                                       ),
@@ -96,6 +148,7 @@ class DaftarPerusahaan extends StatelessWidget {
                                       ),
                                     ),
                                     child: TextField(
+                                      controller: _emailController,
                                       style: TextStyle(
                                         color: Colors.white,
                                       ),
@@ -118,6 +171,7 @@ class DaftarPerusahaan extends StatelessWidget {
                                       ),
                                     ),
                                     child: TextField(
+                                      controller: _passwordController,
                                       style: TextStyle(
                                         color: Colors.white,
                                       ),
@@ -141,6 +195,7 @@ class DaftarPerusahaan extends StatelessWidget {
                                       ),
                                     ),
                                     child: TextField(
+                                      controller: _confirmPasswordController,
                                       style: TextStyle(
                                         color: Colors.white,
                                       ),
@@ -164,10 +219,10 @@ class DaftarPerusahaan extends StatelessWidget {
                                       ),
                                     ),
                                     child: TextField(
+                                      controller: _tahunBerdiriController,
                                       style: TextStyle(
                                         color: Colors.white,
                                       ),
-                                      obscureText: true,
                                       decoration: InputDecoration(
                                         hintText: 'Tahun Berdiri',
                                         hintStyle:
@@ -206,14 +261,8 @@ class DaftarPerusahaan extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  LoginScreen()),
-                                        );
-                                      },
+                                      onPressed: () =>
+                                          _registerCompany(context),
                                       child: Container(
                                         padding:
                                             EdgeInsets.symmetric(vertical: 10),
@@ -232,7 +281,11 @@ class DaftarPerusahaan extends StatelessWidget {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    // Create account action
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                DaftarPerusahaan()));
                                   },
                                   child: Center(
                                     child: Text(
