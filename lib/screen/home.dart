@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:kerjain/Widget/kartu.dart';
 import 'package:kerjain/Widget/kartuHome.dart';
+import 'package:kerjain/Widget/kartuLamaran.dart';
+import 'package:kerjain/Widget/kartuProfile.dart';
+import 'package:kerjain/screen/splash.dart';
 
 class HomePekerja extends StatefulWidget {
   const HomePekerja({Key? key}) : super(key: key);
@@ -41,11 +44,7 @@ class _HomePekerjaState extends State<HomePekerja> {
                             ),
                             const Row(
                               children: [
-                                CircleAvatar(
-                                  radius: 40,
-                                  backgroundImage: AssetImage('assets/kerjain.png'),
-                                ),
-                                SizedBox(width: 30),
+                                SizedBox(width: 10),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -224,17 +223,17 @@ class _HomePekerjaState extends State<HomePekerja> {
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 25),
+                                  horizontal: 20, vertical: 15),
                               child: TextField(
                                 decoration: InputDecoration(
                                   suffixIcon: Container(
                                     padding: EdgeInsets.all(20), // Set padding to zero
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
-                                      color: Color.fromRGBO(5, 26, 73, 1), // Change the background color here
+                                      color: Color.fromRGBO(5, 26, 73, 1),
                                     ),
                                     child: Icon(Icons.search,
-                                        color: Colors.white), // Set the icon color to white
+                                        color: Colors.white),
                                   ),
                                   hintText: 'Search...',
                                   border: OutlineInputBorder(
@@ -283,47 +282,196 @@ class _HomePekerjaState extends State<HomePekerja> {
                   ),
                 ),
                 // Content of Tab 3
-                Container(
-                  color: Colors.black,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 60,
-                        ),
-                        Text(
-                          'Lamaranku',
-                          style: TextStyle(
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 64, bottom: 10),
+                        child: Container(
+                          child: Text('Lamaranku',style: TextStyle(
+                            fontSize: 28,
                             fontFamily: 'Poppins',
-                            fontSize: 22,
                             fontWeight: FontWeight.w700,
-                          ),
+                          ),),
                         ),
-                        Container(
-                          color: Colors.blueGrey, // Set your desired background color here
-                          width: double.infinity, // Ensure the container takes the full width
-                          padding: EdgeInsets.all(16), // Add padding if necessary
-                          child: Column(
-                            children: [
-                              // Add your content under 'Lamaranku' text here
-                              // Example content
-                              Text(
-                                'Your additional content goes here...',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
+                      ),
+                      Container(
+                        color: Color.fromRGBO(217,217,217,1),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 5),
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 1),
+                              width: MediaQuery.of(context).size.width * 1, // Set the width to 80% of the screen width
+                              child: GridView(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(), // Disable GridView's own scrolling
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 1, // Number of columns
+                                  crossAxisSpacing: 12, // Horizontal spacing between columns
+                                  mainAxisSpacing: 12, // Vertical spacing between rows
+                                  childAspectRatio: 2,
                                 ),
+                                children: [
+                                  KartuLamaran(pekerjaan: 'BackEnd', onPressed: () {}),
+                                  KartuLamaran(pekerjaan: 'FrontEnd', onPressed: () {}),
+                                  KartuLamaran(pekerjaan: 'BackEnd', onPressed: () {}),
+                                ],
                               ),
-                              // Add more widgets as needed
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
+
                 // Content of Tab 4
-                Center(child: Text('Profile Content')),
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 250, top: 80),
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => kerjaSplash()),
+                            );
+                          },
+                          icon: Icon(Icons.logout_outlined),
+                          label: Text('Logout'), // You can change the text or leave it as an empty string if you don't want text
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromRGBO(5, 26, 73, 1), // Button background color
+                            foregroundColor: Colors.white, // Icon and text color
+                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), // Button padding
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12), // Rounded corners
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 100),
+                        child: Row(
+                          children: [
+                            Text('Willy Ngoceh',
+                              style:
+                              TextStyle(
+                                fontSize: 28,
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            Icon(Icons.edit_outlined),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 60,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 220),
+                        child: Text('Deskripsi',
+                        style:
+                        TextStyle(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
+                            ),
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                            width: 300,
+                            child: TextField(
+                              maxLines: 5,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue, width: 0.7),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                              height: 20
+                          ),
+                          Container(
+                            width: 300,
+                            height: 50,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.email_outlined),
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                              height: 20
+                          ),
+                          Container(
+                            width: 300,
+                            height: 50,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.cake_outlined),
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            child: Text('Riwayat pekerjaan',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(left: 20, right: 20),
+                            child: GridView(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(), // Disable GridView's own scrolling
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 8,
+                                mainAxisSpacing: 8,
+                                childAspectRatio: 1.5,
+                              ),
+                              children: [
+                                KartuProfile(pekerjaan: 'BackEnd', onPressed: () {}),
+                                KartuProfile(pekerjaan: 'FrontEnd', onPressed: () {}),
+                                KartuProfile(pekerjaan: 'BackEnd', onPressed: () {}),
+                                KartuProfile(pekerjaan: 'FrontEnd', onPressed: () {}),
+                                // Add more Kartu widgets as needed
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 50,
+                          ),
+
+
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ],
             );
           },
