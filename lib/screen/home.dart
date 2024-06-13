@@ -9,6 +9,9 @@ import 'package:kerjain/services/lowongan_service.dart';
 import 'package:kerjain/services/user_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:kerjain/Widget/kartuHome.dart';
+import 'package:kerjain/Widget/kartuLamaran.dart';
+import 'package:kerjain/Widget/kartuProfile.dart';
+import 'package:kerjain/screen/splash.dart';
 import 'package:kerjain/screen/splash.dart';
 
 class HomePekerja extends StatefulWidget {
@@ -353,7 +356,150 @@ class _HomePekerjaState extends State<HomePekerja> {
             // Content of Tab 3
             Testing(),
             // Content of Tab 4
-            Center(child: Text('Profile Content')),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 250, top: 80),
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => kerjaSplash()),
+                        );
+                      },
+                      icon: Icon(Icons.logout_outlined),
+                      label: Text('Logout'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromRGBO(
+                            5, 26, 73, 1), // Button background color
+                        foregroundColor: Colors.white, // Icon and text color
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10), // Button padding
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(12), // Rounded corners
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 100),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Willy Ngoceh',
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Icon(Icons.edit_outlined),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 60,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 220),
+                    child: Text(
+                      'Deskripsi',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Container(
+                        width: 300,
+                        child: TextField(
+                          maxLines: 5,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.blue, width: 0.7),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        width: 300,
+                        height: 50,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.email_outlined),
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        width: 300,
+                        height: 50,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.cake_outlined),
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        child: Text(
+                          'Riwayat pekerjaan',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 20, right: 20),
+                        child: GridView(
+                          shrinkWrap: true,
+                          physics:
+                              NeverScrollableScrollPhysics(), // Disable GridView's own scrolling
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 8,
+                            mainAxisSpacing: 8,
+                            childAspectRatio: 1.5,
+                          ),
+                          children: [
+                            KartuProfile(
+                                pekerjaan: 'BackEnd', onPressed: () {}),
+                            KartuProfile(
+                                pekerjaan: 'FrontEnd', onPressed: () {}),
+                            KartuProfile(
+                                pekerjaan: 'BackEnd', onPressed: () {}),
+                            KartuProfile(
+                                pekerjaan: 'FrontEnd', onPressed: () {}),
+                            // Add more Kartu widgets as needed
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
         bottomNavigationBar: Container(
