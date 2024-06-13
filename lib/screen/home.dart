@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:kerjain/Widget/kartu.dart';
+
 import 'package:kerjain/Widget/kartuHome.dart';
 import 'package:kerjain/Widget/kartuLamaran.dart';
 import 'package:kerjain/Widget/kartuProfile.dart';
 import 'package:kerjain/screen/splash.dart';
+
 
 class HomePekerja extends StatefulWidget {
   const HomePekerja({Key? key}) : super(key: key);
@@ -254,6 +256,7 @@ class _HomePekerjaState extends State<HomePekerja> {
                                   fontFamily: 'Poppins',
                                   fontSize: 20,
                                 ),
+
                               ),
                             ),
                             Container(
