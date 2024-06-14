@@ -3,18 +3,45 @@ import 'package:http/http.dart' as http;
 import 'package:kerjain/models/lowongan.dart';
 
 class LowonganService {
-  static const String baseUrl = "http://127.0.0.1:8000/api/user/lowongan";
+  static const String baseUrl = "http://127.0.0.1:8000/api/user/lowongan/";
+
+  static Future<Lowongan> connectAPI(String id) async {
+    Uri url = Uri.parse(baseUrl + id);
+    var hasil = await http.get(url);
+    var data = jsonDecode(hasil.body);
+
+    return Lowongan.fromJson(data);
+  }
 
   static Future<List<Lowongan>> fetchLowongan() async {
     try {
-      final response = await http.get(Uri.parse('$baseUrl/all'));
+      final response = await http.get(Uri.parse(baseUrl + 'all'));
       if (response.statusCode == 200) {
         final body = response.body;
         final List<dynamic> jsonData = jsonDecode(body);
-        print('Fetched JSON data: $jsonData');
         List<Lowongan> lowong =
             jsonData.map((json) => Lowongan.fromJson(json)).toList();
-        print('Parsed Lowongan objects: $lowong');
+        return lowong;
+      } else {
+        throw Exception('Failed to load lowongan');
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw Exception(e.toString());
+    }
+  }
+
+  static Future<List<Lowongan>> checkLowongan(String id) async {
+    try {
+      final response = await http.get(
+          Uri.parse('http://127.0.0.1:8000/api/pt/lowonganperusahaan/${id}'));
+      if (response.statusCode == 200) {
+        final body = response.body;
+        final List<dynamic> jsonData = jsonDecode(body);
+
+        List<Lowongan> lowong =
+            jsonData.map((json) => Lowongan.fromJson(json)).toList();
+
         return lowong;
       } else {
         throw Exception('Failed to load lowongan');

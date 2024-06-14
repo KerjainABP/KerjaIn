@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:kerjain/screen/Auth/Login/login.dart';
-import 'package:kerjain/screen/onboard2.dart';
+import 'package:kerjain/screen/Auth/Login/loginPerusahaan.dart';
 
 class DaftarPerusahaan extends StatefulWidget {
   const DaftarPerusahaan({Key? key}) : super(key: key);
@@ -46,7 +45,7 @@ class _DaftarPerusahaanState extends State<DaftarPerusahaan> {
       // Berhasil mendaftar, mungkin tambahkan logika navigasi ke halaman selanjutnya
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
+        MaterialPageRoute(builder: (context) => LoginScreenPerusahaan()),
       );
     } else {
       // Gagal mendaftar, mungkin tampilkan pesan kesalahan

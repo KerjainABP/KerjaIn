@@ -1,10 +1,12 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kerjain/Widget/kartu.dart';
 import 'package:kerjain/models/lowongan.dart';
 import 'package:kerjain/models/user.dart';
-import 'package:kerjain/screen/Testing.dart';
+import 'package:kerjain/screen/User/Lamaranku.dart';
+import 'package:kerjain/screen/User/ProfileUser.dart';
+import 'package:kerjain/screen/User/Search.dart';
 import 'package:kerjain/services/lowongan_service.dart';
 import 'package:kerjain/services/user_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +15,7 @@ import 'package:kerjain/Widget/kartuLamaran.dart';
 import 'package:kerjain/Widget/kartuProfile.dart';
 import 'package:kerjain/screen/splash.dart';
 import 'package:kerjain/screen/splash.dart';
+import 'package:intl/intl.dart';
 
 class HomePekerja extends StatefulWidget {
   const HomePekerja({Key? key}) : super(key: key);
@@ -27,8 +30,15 @@ class _HomePekerjaState extends State<HomePekerja> {
   List<Lowongan> _lowonganList = [];
 
   // Buat instance dari UserService
-  final UserService _userService = UserService();
   User user = User();
+  String formatRupiah(int number) {
+    final formatCurrency = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+      decimalDigits: 2,
+    );
+    return formatCurrency.format(number);
+  }
 
   @override
   void initState() {
@@ -107,7 +117,7 @@ class _HomePekerjaState extends State<HomePekerja> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          user.nama ?? "",
+                                          "Hai, ${user.nama}" ?? "",
                                           style: const TextStyle(
                                             fontSize: 24,
                                             fontWeight: FontWeight.w700,
@@ -247,10 +257,13 @@ class _HomePekerjaState extends State<HomePekerja> {
                                   child: KartuHome(
                                       pekerjaan: lowong.namaPosisi,
                                       lokasi: lowong.lokasi,
-                                      gajiDari: lowong.gajiDari.toString(),
-                                      gajiHingga: lowong.gajiHingga.toString(),
+                                      gajiDari: formatRupiah(lowong.gajiDari),
+                                      gajiHingga:
+                                          formatRupiah(lowong.gajiHingga),
                                       slot: lowong.slotPosisi.toString(),
-                                      onPressed: () {}),
+                                      perusahaan: lowong.idPerusahaan,
+                                      onPressed: () => Get.toNamed(
+                                          '/detailPage/${lowong.id}')),
                                 );
                               },
                             ),
@@ -261,245 +274,11 @@ class _HomePekerjaState extends State<HomePekerja> {
                   }
                 }),
             // Content of Tab 2
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 64, bottom: 10),
-                    child: Container(
-                      child: Text(
-                        'Search',
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    color: Color.fromRGBO(217, 217, 217, 1),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 25),
-                          child: TextField(
-                            decoration: InputDecoration(
-                              suffixIcon: Container(
-                                padding:
-                                    EdgeInsets.all(20), // Set padding to zero
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Color.fromRGBO(5, 26, 73,
-                                      1), // Change the background color here
-                                ),
-                                child: Icon(Icons.search,
-                                    color: Colors
-                                        .white), // Set the icon color to white
-                              ),
-                              hintText: 'Search...',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 2, left: 30),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 170),
-                          child: Text(
-                            'Hasil Pencarian',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Poppins',
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin:
-                              EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-                          width: MediaQuery.of(context).size.width *
-                              0.9, // Set the width to 80% of the screen width
-                          child: GridView(
-                            shrinkWrap: true,
-                            physics:
-                                NeverScrollableScrollPhysics(), // Disable GridView's own scrolling
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 1, // Number of columns
-                              crossAxisSpacing:
-                                  12, // Horizontal spacing between columns
-                              mainAxisSpacing:
-                                  12, // Vertical spacing between rows
-                              childAspectRatio: 2,
-                            ),
-                            children: [
-                              Kartu(pekerjaan: 'BackEnd', onPressed: () {}),
-                              Kartu(pekerjaan: 'FrontEnd', onPressed: () {}),
-                              Kartu(pekerjaan: 'BackEnd', onPressed: () {}),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            SearchPage(),
             // Content of Tab 3
-            Testing(),
+            LamarankuPage(),
             // Content of Tab 4
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 250, top: 80),
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => kerjaSplash()),
-                        );
-                      },
-                      icon: Icon(Icons.logout_outlined),
-                      label: Text('Logout'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromRGBO(
-                            5, 26, 73, 1), // Button background color
-                        foregroundColor: Colors.white, // Icon and text color
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10), // Button padding
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(12), // Rounded corners
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 100),
-                    child: Row(
-                      children: [
-                        Text(
-                          'Willy Ngoceh',
-                          style: TextStyle(
-                            fontSize: 28,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        Icon(Icons.edit_outlined),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 60,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 220),
-                    child: Text(
-                      'Deskripsi',
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                  Column(
-                    children: [
-                      Container(
-                        width: 300,
-                        child: TextField(
-                          maxLines: 5,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.blue, width: 0.7),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      Container(
-                        width: 300,
-                        height: 50,
-                        child: TextField(
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.email_outlined),
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      Container(
-                        width: 300,
-                        height: 50,
-                        child: TextField(
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.cake_outlined),
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        child: Text(
-                          'Riwayat pekerjaan',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: 20, right: 20),
-                        child: GridView(
-                          shrinkWrap: true,
-                          physics:
-                              NeverScrollableScrollPhysics(), // Disable GridView's own scrolling
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 8,
-                            mainAxisSpacing: 8,
-                            childAspectRatio: 1.5,
-                          ),
-                          children: [
-                            KartuProfile(
-                                pekerjaan: 'BackEnd', onPressed: () {}),
-                            KartuProfile(
-                                pekerjaan: 'FrontEnd', onPressed: () {}),
-                            KartuProfile(
-                                pekerjaan: 'BackEnd', onPressed: () {}),
-                            KartuProfile(
-                                pekerjaan: 'FrontEnd', onPressed: () {}),
-                            // Add more Kartu widgets as needed
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 50,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            ProfileUserPage()
           ],
         ),
         bottomNavigationBar: Container(
