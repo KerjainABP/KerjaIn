@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:kerjain/screen/Auth/Login/login.dart';
+import 'package:kerjain/screen/Auth/Login/loginPerusahaan.dart';
 import 'package:kerjain/screen/onboard2.dart';
 
 class DaftarPerusahaan extends StatefulWidget {
@@ -29,7 +30,7 @@ class _DaftarPerusahaanState extends State<DaftarPerusahaan> {
 
   Future<void> _registerCompany(BuildContext context) async {
     String url =
-        'http://127.0.0.1:8000/api/registerperusahaan'; // Ganti dengan URL endpoint API register perusahaan Anda
+        'https://bekerjain-production.up.railway.app/api/registerperusahaan'; // Ganti dengan URL endpoint API register perusahaan Anda
     var body = {
       'nama': _namaPerusahaanController.text,
       'email': _emailController.text,
@@ -46,7 +47,7 @@ class _DaftarPerusahaanState extends State<DaftarPerusahaan> {
       // Berhasil mendaftar, mungkin tambahkan logika navigasi ke halaman selanjutnya
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
+        MaterialPageRoute(builder: (context) => LoginScreenPerusahaan()),
       );
     } else {
       // Gagal mendaftar, mungkin tampilkan pesan kesalahan

@@ -235,7 +235,7 @@ class _LoginScreenState extends State<LoginScreenPerusahaan> {
                             // Menyambungkan ke API dengan header 'Content-Type'
                             var response = await http.post(
                               Uri.parse(
-                                  'http://127.0.0.1:8000/api/loginperusahaan'),
+                                  'https://bekerjain-production.up.railway.app/api/loginperusahaan'),
                               headers: {
                                 'Content-Type':
                                     'application/json', // Menambahkan header 'Content-Type'

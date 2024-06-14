@@ -93,7 +93,7 @@ class _HomePekerjaState extends State<HomePekerja> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(
-                            height: 24,
+                            height: 50,
                           ),
                           // Existing content of Tab 1
                           Container(
@@ -354,7 +354,55 @@ class _HomePekerjaState extends State<HomePekerja> {
               ),
             ),
             // Content of Tab 3
-            Testing(),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 64, bottom: 10),
+                    child: Container(
+                      child: Text('Lamaranku',style: TextStyle(
+                        fontSize: 28,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w700,
+                      ),),
+                    ),
+                  ),
+                  Container(
+                    color: Color.fromRGBO(217,217,217,1),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 5),
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 1),
+                          width: MediaQuery.of(context).size.width * 1, // Set the width to 80% of the screen width
+                          child: GridView(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(), // Disable GridView's own scrolling
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 1, // Number of columns
+                              crossAxisSpacing: 12, // Horizontal spacing between columns
+                              mainAxisSpacing: 12, // Vertical spacing between rows
+                              childAspectRatio: 2,
+                            ),
+                            children: [
+                              KartuLamaran(pekerjaan: 'BackEnd', onPressed: () {}),
+                              KartuLamaran(pekerjaan: 'FrontEnd', onPressed: () {}),
+                              KartuLamaran(pekerjaan: 'BackEnd', onPressed: () {}),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
             // Content of Tab 4
             SingleChildScrollView(
               child: Column(

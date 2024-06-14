@@ -227,7 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             // Menyiapkan data yang akan dikirimkan ke API
                             var data = {'email': email, 'password': password};
                             var response = await http.post(
-                              Uri.parse('http://127.0.0.1:8000/api/loginuser'),
+                              Uri.parse('https://bekerjain-production.up.railway.app/api/loginuser'),
                               headers: {
                                 'Content-Type':
                                     'application/json', // Menambahkan header 'Content-Type'

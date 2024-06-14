@@ -50,7 +50,7 @@ class _BuatIklanScreenState extends State<BuatIklanScreen> {
     });
 
     final String apiUrl =
-        "http://127.0.0.1:8000/api/pt/newlowongan/$idPerusahaan";
+        "https://bekerjain-production.up.railway.app/api/pt/newlowongan/$idPerusahaan";
 
     final response = await http.post(
       Uri.parse(apiUrl),

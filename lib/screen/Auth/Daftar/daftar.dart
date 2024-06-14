@@ -40,7 +40,7 @@ Future<void> registerUser(BuildContext context) async {
     return;
   }
 
-  final url = Uri.parse('http://127.0.0.1:8000/api/registeruser');
+  final url = Uri.parse('https://bekerjain-production.up.railway.app/api/registeruser');
   final response = await http.post(
     url,
     headers: {
