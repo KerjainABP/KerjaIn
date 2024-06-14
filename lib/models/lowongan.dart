@@ -1,30 +1,30 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+
 class Lowongan {
-  final String id;
-  final String namaPosisi;
-  final String deskripsiPekerjaan;
-  final String kualifikasi;
-  final String lokasi;
-  final int open;
-  final int slotPosisi;
-  final int gajiDari;
-  final int gajiHingga;
-  final String idPerusahaan;
-  final String createdAt;
-  final String updatedAt;
+  String id;
+  String namaPosisi;
+  String deskripsiPekerjaan;
+  String kualifikasi;
+  String lokasi;
+  int open;
+  int slotPosisi;
+  int gajiDari;
+  int gajiHingga;
+  String idPerusahaan;
 
   Lowongan({
-    required this.id,
-    required this.namaPosisi,
-    required this.deskripsiPekerjaan,
-    required this.kualifikasi,
-    required this.lokasi,
-    required this.open,
-    required this.slotPosisi,
-    required this.gajiDari,
-    required this.gajiHingga,
-    required this.idPerusahaan,
-    required this.createdAt,
-    required this.updatedAt,
+    this.id = "",
+    this.namaPosisi = "",
+    this.deskripsiPekerjaan = "",
+    this.kualifikasi = "",
+    this.lokasi = "",
+    this.open = 0,
+    this.slotPosisi = 0,
+    this.gajiDari = 0,
+    this.gajiHingga = 0,
+    this.idPerusahaan = "",
   });
 
   factory Lowongan.fromJson(Map<String, dynamic> json) {
@@ -39,8 +39,6 @@ class Lowongan {
       gajiDari: json['gaji_dari'],
       gajiHingga: json['gaji_hingga'],
       idPerusahaan: json['id_perusahaan'],
-      createdAt: json['created_at'],
-      updatedAt: json['updated_at'],
     );
   }
 
@@ -56,8 +54,25 @@ class Lowongan {
       'gaji_dari': gajiDari,
       'gaji_hingga': gajiHingga,
       'id_perusahaan': idPerusahaan,
-      'created_at': createdAt,
-      'updated_at': updatedAt,
     };
+  }
+
+  static Future<Lowongan> connectAPI(String id) async {
+    Uri url = Uri.parse("http://127.0.0.1:8000/api/user/lowongan/" + id);
+    var hasil = await http.get(url);
+    var data = jsonDecode(hasil.body);
+    print(data.body);
+    return Lowongan(
+      id: data['id'].toString(),
+      namaPosisi: data['nama_posisi'].toString(),
+      deskripsiPekerjaan: data['deskripsi_pekerjaan'].toString(),
+      kualifikasi: data['kualifikasi'].toString(),
+      lokasi: data['lokasi'].toString(),
+      open: data['open'],
+      slotPosisi: data['slot_posisi'],
+      gajiDari: data['gaji_dari'],
+      gajiHingga: data['gaji_hingga'],
+      idPerusahaan: data['data_perusahaan'],
+    );
   }
 }

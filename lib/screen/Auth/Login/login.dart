@@ -105,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         controller: usernameController,
                                         style: TextStyle(color: Colors.white),
                                         decoration: InputDecoration(
-                                          hintText: "Username",
+                                          hintText: "Email",
                                           hintStyle:
                                               TextStyle(color: Colors.white),
                                           border: UnderlineInputBorder(

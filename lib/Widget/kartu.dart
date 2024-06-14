@@ -1,21 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:kerjain/models/perusahaan.dart';
 
-class Kartu extends StatelessWidget {
+class Kartu extends StatefulWidget {
   const Kartu({
     Key? key,
     required this.pekerjaan,
     required this.onPressed,
+    required this.gajiDari,
+    required this.gajiHingga,
+    required this.perusahaan,
     this.colors = Colors.white,
+    required this.textButton,
   }) : super(key: key);
 
   final String pekerjaan;
+  final String perusahaan;
+  final String textButton;
+  final String gajiDari;
+  final String gajiHingga;
   final Function() onPressed;
   final Color colors;
 
   @override
+  _KartuState createState() => _KartuState();
+}
+
+class _KartuState extends State<Kartu> {
+  late Perusahaan _perusahaan;
+
+  @override
+  void initState() {
+    super.initState();
+    _perusahaan = Perusahaan();
+
+    // Fetch data perusahaan ketika Kartu diinisialisasi
+    Perusahaan.connectAPI(widget.perusahaan).then((value) {
+      // Pastikan widget masih terpasang sebelum memanggil setState
+      setState(() {
+        _perusahaan = value;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onPressed,
+      onTap: widget.onPressed,
       child: Container(
         width: 172,
         height: 252,
@@ -38,7 +68,7 @@ class Kartu extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: Text(
-                      pekerjaan,
+                      widget.pekerjaan,
                       style: TextStyle(
                         color: Color.fromRGBO(5, 26, 73, 1),
                         fontSize: 20,
@@ -47,11 +77,12 @@ class Kartu extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // Mengganti kata yang tidak pantas dengan kata yang relevan
+                  // Menggunakan data _perusahaan yang sudah diambil dari API
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: Text(
-                      'Tokopedia',
+                      _perusahaan
+                          .nama, // Menggunakan nama perusahaan dari objek _perusahaan
                       style: TextStyle(
                         color: Color.fromRGBO(5, 26, 73, 1),
                         fontFamily: 'Poppins',
@@ -65,7 +96,7 @@ class Kartu extends StatelessWidget {
                         color: Color.fromRGBO(5, 26, 73, 1),
                       ),
                       Text(
-                        'Bandung',
+                        'Bandung', // Contoh lokasi statis, bisa diganti dengan data yang sesuai
                         style: TextStyle(
                           color: Color.fromRGBO(5, 26, 73, 1),
                           fontFamily: 'Poppins',
@@ -74,7 +105,7 @@ class Kartu extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    'Rp 1.000.000 - Rp 2.000.000',
+                    '${widget.gajiDari} - ${widget.gajiHingga}', // Contoh gaji statis, bisa diganti dengan data yang sesuai
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w700,
@@ -89,11 +120,13 @@ class Kartu extends StatelessWidget {
               bottom: 2,
               right: 5,
               child: ElevatedButton(
-                onPressed: onPressed,
-                child: Text('Lihat Sekarang',
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                ),),
+                onPressed: widget.onPressed,
+                child: Text(
+                  widget.textButton,
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                  ),
+                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color.fromRGBO(5, 26, 73, 1),
                   foregroundColor: Colors.white,

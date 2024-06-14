@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:kerjain/models/perusahaan.dart';
 import 'package:kerjain/screen/homepage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,6 +26,7 @@ class BuatIklanScreen extends StatefulWidget {
 class _BuatIklanScreenState extends State<BuatIklanScreen> {
   late String idPerusahaan;
   bool isLoading = false;
+  Perusahaan _perusahaan = Perusahaan();
 
   final TextEditingController posisiController = TextEditingController();
   final TextEditingController lokasiController = TextEditingController();
@@ -42,6 +44,22 @@ class _BuatIklanScreenState extends State<BuatIklanScreen> {
     deskripsiController.dispose();
     kualifikasiController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getIdUser().then((value) {
+      setState(() {
+        idPerusahaan = value!;
+        // Panggil API setelah mendapatkan idUser
+        Perusahaan.connectAPI(idPerusahaan).then((value) {
+          setState(() {
+            _perusahaan = value;
+          });
+        });
+      });
+    });
   }
 
   Future<void> submitIklan() async {
@@ -167,7 +185,7 @@ class _BuatIklanScreenState extends State<BuatIklanScreen> {
                               ),
                             ),
                             Text(
-                              'tokopedia',
+                              _perusahaan.nama,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.white,

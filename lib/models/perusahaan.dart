@@ -16,7 +16,6 @@ class Perusahaan {
     Uri url = Uri.parse("http://127.0.0.1:8000/api/pt/" + id);
     var hasil = await http.get(url);
     var data = jsonDecode(hasil.body);
-    print(data);
 
     return Perusahaan(
       id: data['id'].toString(),

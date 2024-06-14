@@ -16,7 +16,6 @@ class User {
     Uri url = Uri.parse("http://127.0.0.1:8000/api/user/" + id);
     var hasil = await http.get(url);
     var data = jsonDecode(hasil.body);
-    print(data);
     return User(
         id: data['id'],
         nama: data['nama'],

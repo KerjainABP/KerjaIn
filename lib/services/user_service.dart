@@ -9,11 +9,14 @@ class UserService {
       var apiUrl = Uri.parse('$baseUrl$idUser');
       var response = await http.get(apiUrl);
 
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      print('Response kandiat: ${response.body}');
 
       if (response.statusCode == 200) {
         var userData = jsonDecode(response.body);
+        String nama =
+            userData['nama']; // Memanggil atribut 'nama' dari userData
+        print('Nama pengguna: $nama'); // Contoh pencetakan nama pengguna
+
         return userData;
       } else {
         print('Failed to load user data: ${response.statusCode}');
