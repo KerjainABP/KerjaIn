@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:kerjain/models/kandidat.dart';
 import 'package:kerjain/models/lowongan.dart';
 import 'package:kerjain/models/perusahaan.dart';
 import 'package:kerjain/screen/BuatIklan/BuatIklan.dart';
@@ -7,6 +10,7 @@ import 'package:kerjain/screen/Perusahaan/Iklanku.dart';
 import 'package:kerjain/screen/Perusahaan/ProfilePerusahaan.dart';
 import 'package:kerjain/services/lowongan_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
 void main() {
@@ -37,6 +41,7 @@ class _HomePerusahaanState extends State<HomePerusahaan> {
   late Future<List<Lowongan>> futureLowongan;
   Perusahaan _perusahaan = Perusahaan();
   List<Lowongan> _lowonganList = [];
+  late Future<List<Kandidat>> futureKandidat;
 
   @override
   void initState() {
@@ -88,7 +93,8 @@ class _HomePerusahaanState extends State<HomePerusahaan> {
                 } else {
                   List<Lowongan> lowonganList = snapshot.data ?? [];
                   return SingleChildScrollView(
-                    child: Padding(
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 40),
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,12 +106,12 @@ class _HomePerusahaanState extends State<HomePerusahaan> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(height: 8),
+                          SizedBox(height: 20),
                           Text(
                             'Temukan Individu yang sesuai',
-                            style: TextStyle(fontSize: 24, color: Colors.black),
+                            style: TextStyle(fontSize: 28, color: Colors.black),
                           ),
-                          SizedBox(height: 16),
+                          SizedBox(height: 20),
                           ElevatedButton(
                             onPressed: () {
                               Navigator.push(
@@ -124,19 +130,14 @@ class _HomePerusahaanState extends State<HomePerusahaan> {
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
-                          SizedBox(height: 16),
+                          SizedBox(height: 20),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Iklan Pekerjaan',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              SizedBox(
+                                width: 10,
                               ),
                               Text(
-                                'Lihat Semua',
+                                'Iklan Pekerjaan',
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -228,7 +229,7 @@ class _HomePerusahaanState extends State<HomePerusahaan> {
   }
 }
 
-class JobCard extends StatelessWidget {
+class JobCard extends StatefulWidget {
   final String title;
   final String company;
   final int rating;
@@ -242,6 +243,36 @@ class JobCard extends StatelessWidget {
     required this.location,
     required this.idLowongan,
   });
+
+  @override
+  _JobCardState createState() => _JobCardState();
+}
+
+class _JobCardState extends State<JobCard> {
+  late Future<List<Kandidat>> _kandidatFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _kandidatFuture = fetchKandidat(widget.idLowongan);
+  }
+
+  Future<List<Kandidat>> fetchKandidat(String idLowongan) async {
+    final url = Uri.parse(
+        'https://bekerjain-production.up.railway.app/api/pt/lowonganperusahaan/pendaftar/$idLowongan');
+    final response = await http.get(url);
+
+    print('Fetching candidates for lowongan ID: $idLowongan');
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonList = jsonDecode(response.body);
+      return jsonList.map((json) => Kandidat.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load candidates');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -260,7 +291,7 @@ class JobCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  widget.title,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -269,7 +300,7 @@ class JobCard extends StatelessWidget {
                 ),
                 SizedBox(height: 4),
                 Text(
-                  company,
+                  widget.company,
                   style: TextStyle(color: Colors.white),
                 ),
                 SizedBox(height: 8),
@@ -277,9 +308,32 @@ class JobCard extends StatelessWidget {
                   children: [
                     Icon(Icons.person, color: Colors.white, size: 14),
                     SizedBox(width: 4),
-                    Text(
-                      '0 / $rating',
-                      style: TextStyle(color: Colors.white),
+                    FutureBuilder<List<Kandidat>>(
+                      future: _kandidatFuture,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Text(
+                            'Loading...',
+                            style: TextStyle(color: Colors.white),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text(
+                            'Error',
+                            style: TextStyle(color: Colors.white),
+                          );
+                        } else if (snapshot.hasData) {
+                          return Text(
+                            '${snapshot.data!.length} / ${widget.rating}',
+                            style: TextStyle(color: Colors.white),
+                          );
+                        } else {
+                          return Text(
+                            '0 / ${widget.rating}',
+                            style: TextStyle(color: Colors.white),
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),
@@ -289,7 +343,7 @@ class JobCard extends StatelessWidget {
                     Icon(Icons.location_on, color: Colors.white, size: 14),
                     SizedBox(width: 4),
                     Text(
-                      location,
+                      widget.location,
                       style: TextStyle(color: Colors.white),
                     ),
                   ],
@@ -314,7 +368,7 @@ class JobCard extends StatelessWidget {
                     Flexible(
                       child: ElevatedButton(
                         onPressed: () =>
-                            Get.toNamed('/kelolaPegawai/$idLowongan'),
+                            Get.toNamed('/kelolaPegawai/${widget.idLowongan}'),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                         ),

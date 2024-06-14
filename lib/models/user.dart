@@ -13,7 +13,8 @@ class User {
     this.tanggal_lahir = '',
   });
   static Future<User> connectAPI(String id) async {
-    Uri url = Uri.parse("http://127.0.0.1:8000/api/user/" + id);
+    Uri url =
+        Uri.parse("https://bekerjain-production.up.railway.app/api/user/" + id);
     var hasil = await http.get(url);
     var data = jsonDecode(hasil.body);
     return User(

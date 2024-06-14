@@ -48,8 +48,8 @@ class _KartuState extends State<Kartu> {
       onTap: widget.onPressed,
       child: Container(
         width: 172,
-        height: 252,
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        height: 300,
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(17),
@@ -79,7 +79,7 @@ class _KartuState extends State<Kartu> {
                   ),
                   // Menggunakan data _perusahaan yang sudah diambil dari API
                   Padding(
-                    padding: const EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.only(top: 4),
                     child: Text(
                       _perusahaan
                           .nama, // Menggunakan nama perusahaan dari objek _perusahaan

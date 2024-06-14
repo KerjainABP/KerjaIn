@@ -103,7 +103,7 @@ class _HomePekerjaState extends State<HomePekerja> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(
-                            height: 24,
+                            height: 60,
                           ),
                           // Existing content of Tab 1
                           Container(
@@ -186,9 +186,9 @@ class _HomePekerjaState extends State<HomePekerja> {
                             height: 30,
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Container(
+                                margin: EdgeInsets.only(left: 16),
                                 child: const Text(
                                   'Lowongan Baru',
                                   style: TextStyle(
@@ -201,42 +201,42 @@ class _HomePekerjaState extends State<HomePekerja> {
                               const SizedBox(
                                 width: 40,
                               ),
-                              Container(
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Colors.white),
-                                    shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    // Navigasi ke halaman yang sesuai
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(vertical: 10),
-                                    child: Text(
-                                      "Lihat Semua",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'Poppins',
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              // Container(
+                              //   child: ElevatedButton(
+                              //     style: ButtonStyle(
+                              //       backgroundColor:
+                              //           MaterialStateProperty.all<Color>(
+                              //               Colors.white),
+                              //       shape: MaterialStateProperty.all<
+                              //           RoundedRectangleBorder>(
+                              //         RoundedRectangleBorder(
+                              //           borderRadius:
+                              //               BorderRadius.circular(10.0),
+                              //         ),
+                              //       ),
+                              //     ),
+                              //     onPressed: () {
+                              //       // Navigasi ke halaman yang sesuai
+                              //     },
+                              //     child: Container(
+                              //       padding: EdgeInsets.symmetric(vertical: 10),
+                              //       child: Text(
+                              //         "Lihat Semua",
+                              //         style: TextStyle(
+                              //           color: Colors.black,
+                              //           fontSize: 15,
+                              //           fontWeight: FontWeight.w700,
+                              //           fontFamily: 'Poppins',
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           ),
                           Container(
                             margin: EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 8),
+                                horizontal: 8, vertical: 8),
                             child: GridView.builder(
                               shrinkWrap: true,
 
@@ -246,9 +246,9 @@ class _HomePekerjaState extends State<HomePekerja> {
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2, // Number of columns
                                 crossAxisSpacing:
-                                    12, // Horizontal spacing between columns
+                                    8, // Horizontal spacing between columns
                                 mainAxisSpacing:
-                                    12, // Vertical spacing between rows
+                                    8, // Vertical spacing between rows
                               ),
                               itemCount: lowonganList.length,
                               itemBuilder: (context, index) {
@@ -262,6 +262,7 @@ class _HomePekerjaState extends State<HomePekerja> {
                                           formatRupiah(lowong.gajiHingga),
                                       slot: lowong.slotPosisi.toString(),
                                       perusahaan: lowong.idPerusahaan,
+                                      idLowongan: lowong.id,
                                       onPressed: () => Get.toNamed(
                                           '/detailPage/${lowong.id}')),
                                 );

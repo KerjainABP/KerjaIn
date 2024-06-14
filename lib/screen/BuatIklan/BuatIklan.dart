@@ -34,6 +34,7 @@ class _BuatIklanScreenState extends State<BuatIklanScreen> {
   final TextEditingController gajiHinggaController = TextEditingController();
   final TextEditingController deskripsiController = TextEditingController();
   final TextEditingController kualifikasiController = TextEditingController();
+  final TextEditingController slotController = TextEditingController();
 
   @override
   void dispose() {
@@ -43,6 +44,7 @@ class _BuatIklanScreenState extends State<BuatIklanScreen> {
     gajiHinggaController.dispose();
     deskripsiController.dispose();
     kualifikasiController.dispose();
+    slotController.dispose();
     super.dispose();
   }
 
@@ -68,7 +70,7 @@ class _BuatIklanScreenState extends State<BuatIklanScreen> {
     });
 
     final String apiUrl =
-        "http://127.0.0.1:8000/api/pt/newlowongan/$idPerusahaan";
+        "https://bekerjain-production.up.railway.app/api/pt/newlowongan/$idPerusahaan";
 
     final response = await http.post(
       Uri.parse(apiUrl),
@@ -83,7 +85,7 @@ class _BuatIklanScreenState extends State<BuatIklanScreen> {
         'deskripsi_pekerjaan': deskripsiController.text,
         'kualifikasi': kualifikasiController.text,
         'id_perusahaan': idPerusahaan,
-        "slot_posisi": "10",
+        "slot_posisi": slotController.text,
       }),
     );
 
@@ -207,6 +209,29 @@ class _BuatIklanScreenState extends State<BuatIklanScreen> {
                                       controller: lokasiController,
                                       decoration: InputDecoration(
                                         hintText: 'Lokasi',
+                                        hintStyle:
+                                            TextStyle(color: Colors.white54),
+                                        border: InputBorder.none,
+                                      ),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 15),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Icon(Icons.person, color: Colors.white),
+                                  SizedBox(width: 5),
+                                  Expanded(
+                                    child: TextField(
+                                      controller: slotController,
+                                      decoration: InputDecoration(
+                                        hintText: 'Slot Posisi',
                                         hintStyle:
                                             TextStyle(color: Colors.white54),
                                         border: InputBorder.none,

@@ -88,7 +88,7 @@ class _KelolaIklanPageState extends State<KelolaIklanPage> {
     try {
       final response = await http.put(
         Uri.parse(
-            'http://127.0.0.1:8000/api/pt/lowonganperusahaan/edit/$idLowongan'),
+            'https://bekerjain-production.up.railway.app/api/pt/lowonganperusahaan/edit/$idLowongan'),
         headers: {
           'Content-Type': 'application/json',
         },
