@@ -80,7 +80,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 60.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -102,9 +102,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-              SizedBox(height: 100),
+              SizedBox(height: 20),
               Text(
-                'Tokopedia',
+                _namaController.text,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               Text(

@@ -13,18 +13,23 @@ class _KerjaSplashState extends State<kerjaSplash> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 5), () {
-      Navigator.pushReplacement(context, PageRouteBuilder(
-        transitionDuration: Duration(milliseconds: 3000), // Adjust the duration as needed
-        pageBuilder: (_, __, ___) => Onboard(), // Onboard() is your destination widget
-        transitionsBuilder: (_, animation, __, child) {
-          return FadeTransition(
-            opacity: animation,
-            child: child,
-          );
-        },
-      ));
+      Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            transitionDuration:
+                Duration(milliseconds: 3000), // Adjust the duration as needed
+            pageBuilder: (_, __, ___) =>
+                Onboard(), // Onboard() is your destination widget
+            transitionsBuilder: (_, animation, __, child) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
+            },
+          ));
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

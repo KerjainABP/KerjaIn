@@ -3,7 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:kerjain/models/lowongan.dart';
 
 class LowonganService {
-  static const String baseUrl = "http://127.0.0.1:8000/api/user/lowongan/";
+  static const String baseUrl =
+      "https://bekerjain-production.up.railway.app/api/user/lowongan/";
 
   static Future<Lowongan> connectAPI(String id) async {
     Uri url = Uri.parse(baseUrl + id);
@@ -33,8 +34,8 @@ class LowonganService {
 
   static Future<List<Lowongan>> checkLowongan(String id) async {
     try {
-      final response = await http.get(
-          Uri.parse('http://127.0.0.1:8000/api/pt/lowonganperusahaan/${id}'));
+      final response = await http.get(Uri.parse(
+          'https://bekerjain-production.up.railway.app/api/pt/lowonganperusahaan/${id}'));
       if (response.statusCode == 200) {
         final body = response.body;
         final List<dynamic> jsonData = jsonDecode(body);

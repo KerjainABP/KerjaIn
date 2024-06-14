@@ -28,7 +28,7 @@ class _DaftarPerusahaanState extends State<DaftarPerusahaan> {
 
   Future<void> _registerCompany(BuildContext context) async {
     String url =
-        'http://127.0.0.1:8000/api/registerperusahaan'; // Ganti dengan URL endpoint API register perusahaan Anda
+        'https://bekerjain-production.up.railway.app/api/registerperusahaan'; // Ganti dengan URL endpoint API register perusahaan Anda
     var body = {
       'nama': _namaPerusahaanController.text,
       'email': _emailController.text,

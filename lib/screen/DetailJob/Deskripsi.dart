@@ -45,7 +45,7 @@ class _JobDeskripsiScreenState extends State<JobDeskripsiScreen> {
       var data = {'id_user': userID, 'id_lowongan': idLowongan};
 
       final response = await http.post(
-        Uri.parse('http://127.0.0.1:8000/api/user/apply'),
+        Uri.parse('https://bekerjain-production.up.railway.app/api/user/apply'),
         headers: {
           'Content-Type':
               'application/json', // Menambahkan header 'Content-Type'

@@ -50,7 +50,7 @@ class _LihatpekerjaState extends State<Lihatpekerja> {
 
   Future<List<Kandidat>> fetchKandidat(String idLowongan) async {
     final url = Uri.parse(
-        'http://127.0.0.1:8000/api/pt/lowonganperusahaan/pendaftar/$idLowongan');
+        'https://bekerjain-production.up.railway.app/api/pt/lowonganperusahaan/pendaftar/$idLowongan');
     final response = await http.get(url);
 
     print('Fetching candidates for lowongan ID: $idLowongan');
@@ -63,6 +63,12 @@ class _LihatpekerjaState extends State<Lihatpekerja> {
     } else {
       throw Exception('Failed to load candidates');
     }
+  }
+
+  void refreshCandidates() {
+    setState(() {
+      fetchKandidat(idLowongan!);
+    });
   }
 
   @override
@@ -151,7 +157,10 @@ class _LihatpekerjaState extends State<Lihatpekerja> {
                                   } else if (!snapshot.hasData ||
                                       snapshot.data!.isEmpty) {
                                     return Center(
-                                        child: Text('No candidates available'));
+                                        child: Text(
+                                      'No candidates available',
+                                      style: TextStyle(color: Colors.white),
+                                    ));
                                   } else {
                                     List<Kandidat> candidates = snapshot.data!;
                                     return ListView.builder(
@@ -196,6 +205,8 @@ class CandidateCard extends StatelessWidget {
   final String description;
   final String idUser;
   final String idLowongan;
+  final VoidCallback?
+      onActionComplete; // Callback untuk memuat ulang data kandidat
 
   CandidateCard({
     required this.name,
@@ -203,42 +214,44 @@ class CandidateCard extends StatelessWidget {
     required this.description,
     required this.idUser,
     required this.idLowongan,
+    this.onActionComplete,
   });
 
-  Future<void> terimaKandidat() async {
+  Future<void> terimaKandidat(BuildContext context) async {
     try {
       final url = Uri.parse(
-          'http://127.0.0.1:8000/api/pt/lowonganperusahaan/terima/$idLowongan/$idUser');
+          'https://bekerjain-production.up.railway.app/api/pt/lowonganperusahaan/terima/$idLowongan/$idUser');
       final response = await http.put(url);
 
       if (response.statusCode == 200) {
-        // Handle success case if needed
+        // Panggil callback jika sukses
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Kandidat ditolak')),
+        );
         print('Kandidat diterima');
       } else {
-        // Handle error case if needed
         print('Gagal menerima kandidat');
       }
     } catch (e) {
-      // Handle any exceptions that occur
       print('Error: $e');
     }
   }
 
-  Future<void> tolakKandidat() async {
+  Future<void> tolakKandidat(BuildContext context) async {
     try {
       final url = Uri.parse(
-          'http://127.0.0.1:8000/api/pt/lowonganperusahaan/tolak/$idLowongan/$idUser');
+          'https://bekerjain-production.up.railway.app/api/pt/lowonganperusahaan/tolak/$idLowongan/$idUser');
       final response = await http.put(url);
 
       if (response.statusCode == 200) {
-        // Handle success case if needed
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Kandidat ditolak')),
+        );
         print('Kandidat ditolak');
       } else {
-        // Handle error case if needed
         print('Gagal menolak kandidat');
       }
     } catch (e) {
-      // Handle any exceptions that occur
       print('Error: $e');
     }
   }
@@ -268,7 +281,7 @@ class CandidateCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 ElevatedButton(
-                  onPressed: terimaKandidat,
+                  onPressed: () => terimaKandidat(context),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
                   ),
@@ -276,7 +289,7 @@ class CandidateCard extends StatelessWidget {
                 ),
                 SizedBox(width: 10.0),
                 ElevatedButton(
-                  onPressed: tolakKandidat,
+                  onPressed: () => tolakKandidat(context),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red,
                   ),

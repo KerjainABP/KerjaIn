@@ -1,10 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kerjain/models/lowongan.dart';
 import 'package:kerjain/screen/DetailJob/Deskripsi.dart';
-import 'package:kerjain/screen/DetailJob/DetailJobUser.dart';
 import 'package:kerjain/services/lowongan_service.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class JobDetailScreen extends StatefulWidget {
   @override
@@ -14,16 +17,98 @@ class JobDetailScreen extends StatefulWidget {
 class _JobDetailScreenState extends State<JobDetailScreen> {
   late Future<Lowongan> dataLowongan;
   String? idLowongan;
+  String? idUser;
 
   @override
   void initState() {
     super.initState();
+    getIdUser().then((value) {
+      setState(() {
+        idUser = value!;
+      });
+    });
     idLowongan = Get.parameters['id'];
     if (idLowongan != null) {
       dataLowongan = LowonganService.connectAPI(idLowongan!);
     } else {
       // Assign a default value or handle the null case appropriately
       dataLowongan = Future.error('Invalid ID');
+    }
+  }
+
+  Future<String?> getIdUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('idUser');
+  }
+
+  void handleSubmit(
+      BuildContext context, String userID, String idLowongan) async {
+    try {
+      var data = {'id_user': userID, 'id_lowongan': idLowongan};
+
+      final response = await http.post(
+        Uri.parse('https://bekerjain-production.up.railway.app/api/user/apply'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(data),
+      );
+
+      if (response.statusCode == 201) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Berhasil melamar pekerjaan'),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.pushNamed(context, '/dashboardUser');
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Gagal melamar pekerjaan'),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
+    } catch (error) {
+      print("Gagal melamar pekerjaan: $error");
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Gagal melamar pekerjaan'),
+            content: Text('Gagal melamar pekerjaan, silakan coba lagi'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 
@@ -83,7 +168,6 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                               SingleChildScrollView(
                             controller: controller,
                             child: Container(
-                              height: screenHeight - 55,
                               padding: EdgeInsets.all(16),
                               decoration: BoxDecoration(
                                 color: Color(0xFF081127),
@@ -92,6 +176,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                                 ),
                               ),
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
                                     mainAxisAlignment:
@@ -149,12 +234,12 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                                   ),
                                   SizedBox(height: 20),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Icon(
                                         Icons.location_on,
                                         color: Colors.white,
                                       ),
+                                      SizedBox(width: 8),
                                       Text(
                                         lowongan.lokasi,
                                         style: TextStyle(color: Colors.white),
@@ -163,12 +248,12 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                                   ),
                                   SizedBox(height: 20),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Icon(
                                         Icons.money,
                                         color: Colors.white,
                                       ),
+                                      SizedBox(width: 8),
                                       Text(
                                         "${formatRupiah(lowongan.gajiDari)} - ${formatRupiah(lowongan.gajiHingga)}",
                                         style: TextStyle(color: Colors.white),
@@ -193,18 +278,13 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                                     ),
                                     textAlign: TextAlign.justify,
                                   ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      'Kualifikasi',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
+                                  SizedBox(height: 20),
+                                  Text(
+                                    'Kualifikasi',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
                                     ),
                                   ),
                                   SizedBox(height: 10),
@@ -216,9 +296,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                                     ),
                                     textAlign: TextAlign.justify,
                                   ),
-                                  SizedBox(
-                                      height:
-                                          80), // Provide space for the fixed button
+                                  SizedBox(height: 80),
                                 ],
                               ),
                             ),
@@ -232,14 +310,14 @@ class _JobDetailScreenState extends State<JobDetailScreen> {
                     child: Container(
                       width: screenWidth,
                       decoration: BoxDecoration(
-                        color: Color(
-                            0xFF081127), // Warna background di belakang tombol
+                        color: Color(0xFF081127),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      padding: EdgeInsets.all(
-                          8), // Padding untuk memberi ruang di sekitar tombol
+                      padding: EdgeInsets.all(8),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          handleSubmit(context, idUser!, lowongan.id);
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xFF2949F1),
                           foregroundColor: Colors.white,

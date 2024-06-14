@@ -102,7 +102,7 @@ class _PekerjakuPageState extends State<PekerjakuPage> {
                           perusahaan: lowong.idPerusahaan,
                           gajiDari: formatRupiah(lowong.gajiDari),
                           gajiHingga: formatRupiah(lowong.gajiHingga),
-                          textButton: "Lihat Pekerja",
+                          textButton: "Lihat Pekerja ",
                         );
                       },
                     ),

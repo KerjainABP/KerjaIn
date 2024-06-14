@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:kerjain/Widget/kartuProfile.dart';
+import 'package:kerjain/models/kerjas.dart';
 import 'package:kerjain/models/user.dart';
 import 'package:kerjain/screen/splash.dart';
 import 'package:http/http.dart' as http;
@@ -20,6 +21,7 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
   bool isEditMode = false;
 
   User user = User();
+  List<Kerjas> riwayatPekerjaan = [];
 
   @override
   void initState() {
@@ -36,6 +38,7 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
             _dobController.text = user.tanggal_lahir;
           });
         });
+        getRiwayat();
       });
     });
   }
@@ -45,8 +48,35 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
     return prefs.getString('idUser');
   }
 
+  Future<void> getRiwayat() async {
+    final url = Uri.parse(
+        'https://bekerjain-production.up.railway.app/api/user/experience/$idUser');
+    try {
+      final response = await http.get(url);
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+      if (response.statusCode == 200) {
+        List<dynamic> jsonList = jsonDecode(response.body);
+        setState(() {
+          riwayatPekerjaan =
+              jsonList.map((json) => Kerjas.fromJson(json)).toList();
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to load work history')),
+        );
+      }
+    } catch (error) {
+      print('Error: $error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to load work history')),
+      );
+    }
+  }
+
   Future<void> updateProfile() async {
-    final url = Uri.parse('http://127.0.0.1:8000/api/user/edit/$idUser');
+    final url = Uri.parse(
+        'https://bekerjain-production.up.railway.app/api/user/edit/$idUser');
     var data = {
       'nama': _namaController.text,
       'email': _emailController.text,
@@ -98,7 +128,7 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 250, top: 80),
+              padding: const EdgeInsets.only(left: 200, top: 80),
               child: ElevatedButton.icon(
                 onPressed: () {
                   Navigator.push(
@@ -120,7 +150,7 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
             ),
             SizedBox(height: 30),
             Padding(
-              padding: const EdgeInsets.only(left: 100),
+              padding: const EdgeInsets.only(left: 12),
               child: Row(
                 children: [
                   Container(
@@ -218,7 +248,7 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 20, right: 20),
-                  child: GridView(
+                  child: GridView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -227,24 +257,16 @@ class _ProfileUserPageState extends State<ProfileUserPage> {
                       mainAxisSpacing: 8,
                       childAspectRatio: 1.5,
                     ),
-                    children: [
-                      KartuProfile(
-                        pekerjaan: 'BackEnd',
+                    itemCount: riwayatPekerjaan.length,
+                    itemBuilder: (context, index) {
+                      final kerja = riwayatPekerjaan[index];
+                      return KartuProfile(
+                        pekerjaan: kerja.nama_posisi,
+                        idLowongan: kerja.id_lowongan,
+                        idPerusahaan: kerja.id_perusahaan,
                         onPressed: () {},
-                      ),
-                      KartuProfile(
-                        pekerjaan: 'FrontEnd',
-                        onPressed: () {},
-                      ),
-                      KartuProfile(
-                        pekerjaan: 'BackEnd',
-                        onPressed: () {},
-                      ),
-                      KartuProfile(
-                        pekerjaan: 'FrontEnd',
-                        onPressed: () {},
-                      ),
-                    ],
+                      );
+                    },
                   ),
                 ),
                 SizedBox(height: 50),

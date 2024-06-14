@@ -70,7 +70,7 @@ class _KartuLamaranState extends State<KartuLamaran> {
       onTap: widget.onPressed,
       child: Container(
         width: 172,
-        height: 252,
+        height: 400,
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -88,7 +88,7 @@ class _KartuLamaranState extends State<KartuLamaran> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 8),
+                    padding: const EdgeInsets.only(top: 0),
                     child: Text(
                       widget.pekerjaan,
                       style: TextStyle(
@@ -101,7 +101,7 @@ class _KartuLamaranState extends State<KartuLamaran> {
                   ),
                   // Menggunakan data _perusahaan yang sudah diambil dari API
                   Padding(
-                    padding: const EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.only(top: 4),
                     child: Text(
                       _perusahaan
                           .nama, // Menggunakan nama perusahaan dari objek _perusahaan

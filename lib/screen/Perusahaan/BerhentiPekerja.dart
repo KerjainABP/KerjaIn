@@ -50,7 +50,7 @@ class _BerhentipekerjaState extends State<Berhentipekerja> {
 
   Future<List<Kandidat>> fetchKandidat(String idLowongan) async {
     final url = Uri.parse(
-        'http://127.0.0.1:8000/api/pt/lowonganperusahaan/pegawai/$idLowongan');
+        'https://bekerjain-production.up.railway.app/api/pt/lowonganperusahaan/pegawai/$idLowongan');
     final response = await http.get(url);
 
     print('Fetching candidates for lowongan ID: $idLowongan');
@@ -208,14 +208,16 @@ class CandidateCard extends StatelessWidget {
     required this.idLowongan,
   });
 
-  Future<void> berhentiPekerja() async {
+  Future<void> berhentiPekerja(BuildContext context) async {
     try {
       final url = Uri.parse(
-          'http://127.0.0.1:8000/api/pt/lowonganperusahaan/selesai/$idLowongan/$idUser');
+          'https://bekerjain-production.up.railway.app/api/pt/lowonganperusahaan/selesai/$idLowongan/$idUser');
       final response = await http.put(url);
 
       if (response.statusCode == 200) {
-        // Handle success case if needed
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Pegawai Diberhentikan')),
+        );
         print('Pegawai diberhentikan');
       } else {
         // Handle error case if needed
@@ -252,7 +254,7 @@ class CandidateCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 ElevatedButton(
-                  onPressed: berhentiPekerja,
+                  onPressed: () => berhentiPekerja(context),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red,
                   ),

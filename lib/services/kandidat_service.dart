@@ -5,7 +5,7 @@ import 'package:kerjain/models/kandidat.dart';
 class KandidatService {
   static Future<List<Kandidat>> fetchKandidat(String idLowongan) async {
     final url = Uri.parse(
-        'http://127.0.0.1:8000/api/pt/lowonganperusahaan/pendaftar/$idLowongan');
+        'https://bekerjain-production.up.railway.app/api/pt/lowonganperusahaan/pendaftar/$idLowongan');
     final response = await http.get(url);
     print(
         "Response kandidat: ${response.body}"); // Print the response body for debugging

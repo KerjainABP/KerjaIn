@@ -81,7 +81,7 @@ class _LamarankuPageState extends State<LamarankuPage> {
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 1,
-                              crossAxisSpacing: 12,
+                              crossAxisSpacing: 8,
                               mainAxisSpacing: 12,
                               childAspectRatio: 2,
                             ),

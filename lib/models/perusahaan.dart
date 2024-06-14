@@ -13,7 +13,8 @@ class Perusahaan {
   });
 
   static Future<Perusahaan> connectAPI(String id) async {
-    Uri url = Uri.parse("http://127.0.0.1:8000/api/pt/" + id);
+    Uri url =
+        Uri.parse("https://bekerjain-production.up.railway.app/api/pt/" + id);
     var hasil = await http.get(url);
     var data = jsonDecode(hasil.body);
 

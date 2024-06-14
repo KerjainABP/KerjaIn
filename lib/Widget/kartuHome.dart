@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:kerjain/models/kandidat.dart';
 import 'package:kerjain/models/perusahaan.dart';
 
 class KartuHome extends StatefulWidget {
@@ -9,7 +12,8 @@ class KartuHome extends StatefulWidget {
     required this.gajiDari,
     required this.gajiHingga,
     required this.slot,
-    required this.perusahaan, // Ubah tipe data menjadi Perusahaan
+    required this.perusahaan,
+    required this.idLowongan,
     required this.onPressed,
     this.colors = Colors.white,
   }) : super(key: key);
@@ -18,7 +22,8 @@ class KartuHome extends StatefulWidget {
   final String lokasi;
   final String gajiDari;
   final String gajiHingga;
-  final String perusahaan; // Perusahaan sebagai objek Perusahaan
+  final String perusahaan; // Changed type to Perusahaan
+  final String idLowongan; // Changed type to Perusahaan
   final String slot;
   final Function() onPressed;
   final Color colors;
@@ -28,7 +33,8 @@ class KartuHome extends StatefulWidget {
 }
 
 class _KartuHomeState extends State<KartuHome> {
-  Perusahaan _perusahaan = Perusahaan();
+  Perusahaan? _perusahaan;
+  List<Kandidat> _kandidatList = [];
 
   @override
   void initState() {
@@ -38,6 +44,30 @@ class _KartuHomeState extends State<KartuHome> {
         _perusahaan = value;
       });
     });
+
+    // Fetch the list of candidates
+    fetchKandidat(widget.idLowongan).then((kandidatList) {
+      setState(() {
+        _kandidatList = kandidatList;
+      });
+    });
+  }
+
+  Future<List<Kandidat>> fetchKandidat(String idLowongan) async {
+    final url = Uri.parse(
+        'https://bekerjain-production.up.railway.app/api/pt/lowonganperusahaan/pendaftar/$idLowongan');
+    final response = await http.get(url);
+
+    print('Fetching candidates for lowongan ID: $idLowongan');
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonList = jsonDecode(response.body);
+      return jsonList.map((json) => Kandidat.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load candidates');
+    }
   }
 
   @override
@@ -46,8 +76,8 @@ class _KartuHomeState extends State<KartuHome> {
       onTap: widget.onPressed,
       child: Container(
         width: 172,
-        height: 212,
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+        height: 300,
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
           color: Color.fromRGBO(5, 26, 73, 1),
           borderRadius: BorderRadius.circular(17),
@@ -71,7 +101,7 @@ class _KartuHomeState extends State<KartuHome> {
                   ),
                 ),
                 Text(
-                  _perusahaan.nama ?? "",
+                  _perusahaan?.nama ?? "", // Use the Perusahaan object's name
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 12,
@@ -89,7 +119,7 @@ class _KartuHomeState extends State<KartuHome> {
                       width: 12,
                     ),
                     Text(
-                      '0 / ${widget.slot}',
+                      '${_kandidatList.length} / ${widget.slot}',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 12,
@@ -131,41 +161,6 @@ class _KartuHomeState extends State<KartuHome> {
                   height: 20,
                 ),
               ],
-            ),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: Align(
-                child: Container(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      print(_perusahaan); // Contoh: Akses informasi perusahaan
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(5, 26, 73, 1),
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'Detail',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                          ),
-                        ),
-                        Icon(
-                          Icons.arrow_right_alt,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
             ),
           ],
         ),
